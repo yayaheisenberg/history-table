@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>History Table</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<h1>Hello History</h1>
+<input type="text" id="search" placeholder="Rechercher un livre..." />
+<div class="filters">
+  <button data-theme="all" class="active">Tous</button>
+  <button data-theme="holocaust">Holocauste</button>
+  <button data-theme="nazism">Nazisme</button>
+  <button data-theme="coldwar">Guerre froide</button>
+
+  <select id="ratingFilter">
+    <option value="0">Toutes les notes</option>
+    <option value="3">⭐⭐⭐ et +</option>
+    <option value="4">⭐⭐⭐⭐ et +</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+  </select>
+</div>
+
+
+<main class="table"></main>
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <span id="close">&times;</span>
+    <h2 id="modal-title"></h2>
+    <p id="modal-description"></p>
+    <span id="modal-theme"></span>
+    <img id="modal-image" src="" alt="Couverture du livre" />
+    <p id="modal-rating"></p>
+  </div>
+</div>
+
+
+<script src="js/script.js"></script>
+</body>
+</html>
