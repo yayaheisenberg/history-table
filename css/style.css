@@ -113,21 +113,21 @@ h1 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85); /* Plus sombre pour mieux voir la modal */
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
-  align-items: center;    /* 🔥 Centre verticalement par rapport à l'écran */
-  z-index: 100000;        /* Augmenté pour être sûr de passer devant tout */
+  align-items: center;
+  z-index: 100000;
   cursor: pointer;
-  padding: 15px;          /* Marge de sécurité pour mobile */
+  padding: 15px;
   box-sizing: border-box;
 }
 
 .modal-content {
   background: linear-gradient(135deg, rgba(30, 70, 75, 0.98), rgba(15, 40, 45, 0.98));
   width: 100%;
-  max-width: 650px;       /* Largeur PC */
+  max-width: 650px;
   padding: 25px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -135,34 +135,64 @@ h1 {
   color: white;
   box-shadow: 0 25px 50px rgba(0,0,0,0.6);
   cursor: default;
-  max-height: 90vh;       /* 🔥 Empêche de sortir de l'écran sur mobile */
-  overflow-y: auto;       /* 🔥 Permet de scroller DANS la carte si besoin */
+  max-height: 90vh;
+  overflow-y: auto; /* Permet le scroll interne */
 }
 
-/* --- RESPONSIVE MOBILE --- */
+/* --- RESPONSIVE MOBILE (CORRIGÉ) --- */
 @media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
   .modal-body {
-    flex-direction: column; /* Image au dessus du texte sur mobile */
+    flex-direction: column; /* Image au-dessus du texte */
     align-items: center;
+    gap: 20px;
   }
   
   .modal-left {
-    width: 180px;         /* Image plus petite sur mobile */
+    width: 100%;
+    max-width: 200px; /* Taille couverture mobile */
+  }
+
+  .modal-right {
+    width: 100%;
+    text-align: center;
+    align-items: center;
   }
 
   #modal-title-main {
-    font-size: 1.6rem;    /* Titre moins énorme sur mobile */
+    font-size: 1.6rem !important;
     text-align: center;
   }
 
   .modal-header-row {
     flex-direction: column;
     text-align: center;
+    gap: 10px;
   }
 
   #modal-badge-main {
-    margin-left: 0;       /* Centre le badge sur mobile */
-    margin-top: 10px;
+    margin: 0 auto !important; /* Centre le badge */
+  }
+
+  .modal-rating-row {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .modal-description {
+    max-height: none !important; /* On laisse tout le texte s'afficher pour scroller */
+    text-align: justify;
+  }
+
+  .modal-stats-grid {
+    grid-template-columns: 1fr !important; /* Stats en liste verticale */
+    gap: 15px;
   }
 }
 
@@ -189,11 +219,10 @@ h1 {
 }
 
 .modal-left { width: 250px; flex-shrink: 0; }
-#modal-img-main { width: 100%; border-radius: 12px; }
+#modal-img-main { width: 100%; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 
 .modal-right { flex: 1; display: flex; flex-direction: column; }
 
-/* Alignement Titre + Badge */
 .modal-header-row {
   display: flex;
   align-items: center;
@@ -202,49 +231,37 @@ h1 {
 }
 
 #modal-title-main {
-  display: inline;          /* Permet au badge de monter à côté */
   font-size: 2.2rem;
   margin: 0;
 }
 
 #modal-badge-main {
-  display: inline-block;
-  width: fit-content;
-  padding: 10px 20px;       /* Un peu plus généreux pour remplir l'espace */
+  padding: 8px 16px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   color: white;
-  
-  /* C'est ce qui le pousse tout à droite à la place du bouton */
   margin-left: auto; 
-  
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
+
 #modal-author-main { 
   font-size: 1.1rem;
   opacity: 0.7; 
-  margin-bottom: 30px; 
+  margin-bottom: 20px; 
 }
 
-/* Ligne d'action (Note + Bouton Acheter) */
-/* Ligne d'action (Note + Badge à droite) */
-.modal-rating-row { /* Ton HTML utilise modal-rating-row d'après ton message précédent */
+.modal-rating-row {
   display: flex;
   align-items: center; 
-  width: 100%; /* Prend toute la largeur de la colonne droite */
+  width: 100%;
   gap: 25px;
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   box-sizing: border-box;
-}
-.rating-display {
-  display: flex;
-  flex-direction: column;
 }
 
 .big-rating { 
@@ -255,109 +272,27 @@ h1 {
 }
 
 .stars { color: #ffcc00; font-size: 1.1rem; }
+
 .modal-description {
   font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 30px; /* Espace avant la grille de stats */
-  max-height: 150px;    /* Limite la hauteur si le texte est trop long */
-  overflow-y: auto;     /* Ajoute une petite barre de défilement si besoin */
+  margin-bottom: 25px;
+  max-height: 200px;
+  overflow-y: auto;
   padding-right: 10px;
 }
 
-/* Supprime ou commente .btn-buy-book car tu ne l'utilises plus ici */
-.btn-buy-book { display: none; }
-
-.btn-buy-book:hover {
-  background-color: #e67e22;
-  transform: translateY(-2px);
-}
-
-/* Grille de stats en bas */
 .modal-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 25px;
+  padding-top: 20px;
   gap: 20px;
 }
-/* --- HOVER CARD (EFFET POP-OUT) --- */
+
+/* --- HOVER CARD (PC) --- */
 .hover-card {
   position: fixed;
   width: 450px;
-  background: linear-gradient(180deg, #1a3c40 0%, #0b2a2e 100%);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-  z-index: 10000;
-  pointer-events: none;
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  color: white;
-  transition: opacity 0.2s ease-out;
-  
-  /* Permet à l'image de dépasser des bords */
-  overflow: visible; 
-}
-
-.hover-header { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: flex-start;
-  gap: 15px; 
-  margin-bottom: 12px;
-  /* On crée de l'espace en haut pour compenser l'image qui monte */
-  padding-top: 20px; 
-}
-
-.hover-score { font-size: 2.8rem; font-weight: 800; color: #ffcc00; line-height: 1; }
-
-.hover-image-container img { 
-  width: 200px; 
-  height: 310px; 
-  object-fit: cover; 
-  border-radius: 8px;
-  
-  /* C'EST CETTE LIGNE ICI : */
-  margin-top: -120px;  /* Plus le chiffre est élevé (ex: -90px), plus l'image monte */
-  box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.hover-description-box {
-  font-size: 1,60rem;
-  line-height: 1.5;
-  color: rgba(230, 242, 243, 0.9);
-  margin-bottom: 15px;
-  display: -webkit-box;
-  -webkit-line-clamp: 01; 
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.hover-book-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 12px;
-  margin-bottom: 10px;
-}
-
-.hover-footer-row { display: flex; justify-content: space-between; align-items: center; }
-.hover-author { font-size: 0.9rem; opacity: 0.8; margin: 0; }
-.hover-badge { 
-  font-size: 0,90rem;      /* Augmente la taille du texte (était 0.7rem) */
-  padding: 8px 16px;       /* Augmente l'épaisseur et la largeur du badge */
-  border-radius: 20px; 
-  font-weight: bold;
-  text-transform: uppercase; /* Optionnel : met en majuscules pour un look plus "badge" */
-  letter-spacing: 0.5px;    /* Optionnel : espace un peu les lettres */
-}
-.hidden { display: none !important; }
-/* Décale le bloc Note et Étoiles vers la droite */
-.hover-rating-section {
-  margin-left: 20px; /* Augmente ce chiffre (ex: 80px) pour décaler encore plus */
-  display: flex;
-  flex-direction: column;
-  gap: 5px; /* Espace entre le score et les étoiles */
-}
+  background: linear-gradient(18
