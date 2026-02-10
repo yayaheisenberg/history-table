@@ -1,0 +1,46 @@
+[
+  {
+    "number": 1,
+    "code": "Lg",
+    "title": "Les généraux allemands parlent",
+    "author": "Basil H. Liddell Hart",
+    "description": "Les généraux qui ont fait la Wehrmacht de la Seconde Guerre mondiale s'exprime sur le rôle directe lors des offensives.",
+    "theme": "nazisme",
+    "image": "images/bb.jpg",
+    "rating": 4,
+  "youtube" :"https://youtu.be/cDJPp2exJAg?si=fuGCNb_uCdnJZmrL",
+  "pages" : 576
+  },
+  {
+    "number": 2,
+    "code": "Ttr",
+    "title": "The Third Reich",
+    "theme": "nazism",
+    "image": "images/aa.jpg",
+    "rating": 5
+  },
+  {
+    "number": 3,
+    "code": "Sho",
+    "title": "Shoah",
+    "theme": "holocaust",
+    "image": "images/ss.jpg",
+    "rating": 5
+  },
+  {
+    "number": 4,
+    "code": "Nmt",
+    "title": "Night",
+    "theme": "holocaust",
+    "image": "images/night.jpg",
+    "rating": 4
+  },
+  {
+    "number": 5,
+    "code": "Cw",
+    "title": "Cold War",
+    "theme": "coldwar",
+    "image": "images/coldwar.jpg",
+    "rating": 3
+  }
+]

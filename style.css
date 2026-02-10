@@ -1,0 +1,359 @@
+/* --- BASE --- */
+body {
+  margin: 0;
+  background-color: #0b2a2e;
+  color: #e6f2f3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+h1 {
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  border-bottom: 1px solid rgba(30, 107, 115, 0.5);
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+/* --- FILTRES --- */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+#search, .filters button, .filters select {
+  background: #123c41;
+  color: #fff;
+  border: 1px solid #1e6b73;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+.filters button.active {
+  background: #1e6b73;
+  border-color: #fff;
+}
+
+/* --- GRILLE PRINCIPALE --- */
+.table {
+  display: grid;
+  grid-template-columns: repeat(18, 110px); 
+  gap: 8px;
+  padding-bottom: 50px;
+}
+
+.table:has(.cell:hover) .cell:not(:hover),
+.table:has(.cell:hover) .empty-cell {
+  filter: blur(4px);
+  opacity: 0.25;
+  transform: scale(0.96);
+}
+
+/* --- CELLULE NORMALE --- */
+.cell {
+  position: relative;
+  width: 110px;
+  height: 140px;
+  border: 2px solid currentColor;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.cell:hover {
+  transform: scale(1.15);
+  z-index: 1000;
+  background: #0b2a2e;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.number { font-size: 0.9rem; font-weight: 500; }
+.code {
+  font-size: 2.4rem;
+  font-weight: 600;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  font-size: 0.65rem;
+  text-align: center;
+  line-height: 1.2;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-cell {
+  width: 110px;
+  height: 140px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+
+/* --- THÈMES --- */
+.holocaust { color: #f39c12; }
+.nazism { color: #f26d6d; }
+.coldwar { color: #3498db; }
+
+/* --- MODAL (Structure Globale) --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  cursor: pointer; /* Le curseur devient une main sur le fond sombre */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(30, 70, 75, 0.98), rgba(15, 40, 45, 0.98));
+  width: 650px; /* Légèrement plus large pour l'aisance */
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  color: white;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+  cursor: default; /* Le curseur redevient normal sur la carte pour ne pas tromper l'utilisateur */
+} 
+#close-modal {
+  position: absolute;
+  top: 20px;
+  right: 25px;       /* Le force à rester à droite */
+  font-size: 35px;
+  line-height: 1;
+  color: white;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 100;      /* S'assure qu'il est au-dessus de tout */
+  transition: opacity 0.2s;
+}
+
+#close-modal:hover {
+  opacity: 1;        /* Devient brillant au survol */
+}
+.modal-body { 
+  display: flex; 
+  gap: 25px; 
+  align-items: flex-start; 
+}
+
+/* --- COLONNE GAUCHE (Image + More Details) --- */
+.modal-left { 
+  width: 250px; 
+  flex-shrink: 0;
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+
+#modal-img-main { 
+    width: 100%; 
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.btn-more-details {
+  display: block;
+  text-align: center;
+  padding: 10px ;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* --- COLONNE DROITE (Infos + Actions) --- */
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Alignement Titre + Badge */
+.modal-header-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 5px;
+}
+
+#modal-title-main {
+  display: inline;          /* Permet au badge de monter à côté */
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+#modal-badge-main {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px 20px;       /* Un peu plus généreux pour remplir l'espace */
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  
+  /* C'est ce qui le pousse tout à droite à la place du bouton */
+  margin-left: auto; 
+  
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+#modal-author-main { 
+  font-size: 1.1rem;
+  opacity: 0.7; 
+  margin-bottom: 30px; 
+}
+
+/* Ligne d'action (Note + Bouton Acheter) */
+/* Ligne d'action (Note + Badge à droite) */
+.modal-rating-row { /* Ton HTML utilise modal-rating-row d'après ton message précédent */
+  display: flex;
+  align-items: center; 
+  width: 100%; /* Prend toute la largeur de la colonne droite */
+  gap: 25px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+.rating-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.big-rating { 
+  font-size: 3rem; 
+  font-weight: 800; 
+  color: #ffcc00; 
+  line-height: 1; 
+}
+
+.stars { color: #ffcc00; font-size: 1.1rem; }
+.modal-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px; /* Espace avant la grille de stats */
+  max-height: 150px;    /* Limite la hauteur si le texte est trop long */
+  overflow-y: auto;     /* Ajoute une petite barre de défilement si besoin */
+  padding-right: 10px;
+}
+
+/* Supprime ou commente .btn-buy-book car tu ne l'utilises plus ici */
+.btn-buy-book { display: none; }
+
+.btn-buy-book:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+}
+
+/* Grille de stats en bas */
+.modal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 25px;
+  gap: 20px;
+}
+/* --- HOVER CARD (EFFET POP-OUT) --- */
+.hover-card {
+  position: fixed;
+  width: 450px;
+  background: linear-gradient(180deg, #1a3c40 0%, #0b2a2e 100%);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  transition: opacity 0.2s ease-out;
+  
+  /* Permet à l'image de dépasser des bords */
+  overflow: visible; 
+}
+
+.hover-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start;
+  gap: 15px; 
+  margin-bottom: 12px;
+  /* On crée de l'espace en haut pour compenser l'image qui monte */
+  padding-top: 20px; 
+}
+
+.hover-score { font-size: 2.8rem; font-weight: 800; color: #ffcc00; line-height: 1; }
+
+.hover-image-container img { 
+  width: 200px; 
+  height: 310px; 
+  object-fit: cover; 
+  border-radius: 8px;
+  
+  /* C'EST CETTE LIGNE ICI : */
+  margin-top: -120px;  /* Plus le chiffre est élevé (ex: -90px), plus l'image monte */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.hover-description-box {
+  font-size: 1,60rem;
+  line-height: 1.5;
+  color: rgba(230, 242, 243, 0.9);
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 01; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hover-book-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+  margin-bottom: 10px;
+}
+
+.hover-footer-row { display: flex; justify-content: space-between; align-items: center; }
+.hover-author { font-size: 0.9rem; opacity: 0.8; margin: 0; }
+.hover-badge { 
+  font-size: 0,90rem;      /* Augmente la taille du texte (était 0.7rem) */
+  padding: 8px 16px;       /* Augmente l'épaisseur et la largeur du badge */
+  border-radius: 20px; 
+  font-weight: bold;
+  text-transform: uppercase; /* Optionnel : met en majuscules pour un look plus "badge" */
+  letter-spacing: 0.5px;    /* Optionnel : espace un peu les lettres */
+}
+.hidden { display: none !important; }
+/* Décale le bloc Note et Étoiles vers la droite */
+.hover-rating-section {
+  margin-left: 20px; /* Augmente ce chiffre (ex: 80px) pour décaler encore plus */
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Espace entre le score et les étoiles */
+}
