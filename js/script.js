@@ -108,7 +108,9 @@ function renderTable(booksToDisplay) {
 
 function openModal(book, themeColor) {
     const modal = document.getElementById("book-modal");
+    const modalContent = modal.querySelector(".modal-content"); // On cible le contenu
 
+    // 1. Remplissage des données
     document.getElementById("modal-img-main").src = book.image || "";
     document.getElementById("modal-title-main").innerText = book.title;
     document.getElementById("modal-author-main").innerText = book.author || "Unknown";
@@ -133,26 +135,38 @@ function openModal(book, themeColor) {
         youtubeBtn.style.display = "none";
     }
 
+    // --- CORRECTION MOBILE ---
+    // 2. Réinitialise le scroll interne de la modal (pour ne pas commencer en bas)
+    if (modalContent) modalContent.scrollTop = 0;
+
+    // 3. Affiche la modal
     modal.classList.remove("hidden");
     
-    // Bloquer le scroll (PC & MOBILE pour plus de confort)
+    // 4. Bloque le scroll sur TOUTE la page (body + html pour mobile)
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; 
 }
-  
-const modalEl = document.getElementById("book-modal");
 
+// Fonction de fermeture centralisée pour nettoyer les styles
 function closeModal() {
+  const modalEl = document.getElementById("book-modal");
   modalEl.classList.add("hidden");
-  document.body.style.overflow = 'auto'; // Réactive le scroll
+  
+  // Réactive le scroll partout
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
 }
 
+// Liaison des événements de fermeture
 document.getElementById("close-modal").onclick = closeModal;
 
 window.onclick = function(event) {
+  const modalEl = document.getElementById("book-modal");
   if (event.target == modalEl) closeModal();
 };
 
 document.addEventListener('keydown', function(event) {
+  const modalEl = document.getElementById("book-modal");
   if (event.key === "Escape" && !modalEl.classList.contains("hidden")) {
     closeModal();
   }
