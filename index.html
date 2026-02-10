@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The History Table</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <h1>HISTORICAL NON-FICTION</h1>
+
+  <div class="filters">
+    <input type="text" id="search" placeholder="Rechercher un livre..." />
+    <button data-theme="all" class="active">Tous</button>
+    <button data-theme="holocaust">Holocauste</button>
+    <button data-theme="nazism">Nazisme</button>
+    <button data-theme="coldwar">Guerre froide</button>
+
+    <select id="ratingFilter">
+      <option value="0">Toutes les notes</option>
+      <option value="3">⭐⭐⭐ et +</option>
+      <option value="4">⭐⭐⭐⭐ et +</option>
+      <option value="5">⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+
+  <main class="table"></main>
+
+  <div id="book-modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="close-modal">&times;</span>
+      
+<div class="modal-body"> 
+  <div class="modal-left">
+    <img id="modal-img-main" src="" alt="Couverture du livre">
+    <div class="modal-buttons-container">
+      <a id="link-youtube" href="#" target="_blank" class="btn-more-details">
+        More Details <span>→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="modal-right">
+    <h2 id="modal-title-main"></h2>
+    <p class="modal-author">By <span id="modal-author-main"></span></p>
+
+    <div class="modal-rating-row">
+      <span id="modal-rating-num" class="big-rating"></span>
+      <div class="my-rating-block">
+        <span class="rating-label">MY RATING</span>
+        <div id="modal-stars-main" class="stars"></div>
+      </div>
+      <div id="modal-badge-main" class="modal-category-badge"></div>
+    </div>
+
+    <p id="modal-description-main" class="modal-description"></p>
+
+
+  </div> </div>
+
+          <div class="modal-stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">REVIEWS (2106)</span>
+              <span class="stat-value">4.5/5.0</span>
+              <div class="mini-stars">★★★★☆</div>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">PAGES</span>
+              <span id="modal-pages-main" class="stat-value"></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">PUBLISHED</span>
+              <span id="modal-year-main" class="stat-value"></span>
+            </div>
+          </div>
+        </div> 
+      </div> 
+    </div> 
+  </div> 
+
+  <script src="js/script.js"></script>
+</body>
+</html>
