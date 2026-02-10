@@ -111,104 +111,87 @@ h1 {
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Plus sombre pour mieux voir la modal */
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 20000;
-  cursor: pointer; /* Le curseur devient une main sur le fond sombre */
+  align-items: center;    /* 🔥 Centre verticalement par rapport à l'écran */
+  z-index: 100000;        /* Augmenté pour être sûr de passer devant tout */
+  cursor: pointer;
+  padding: 15px;          /* Marge de sécurité pour mobile */
+  box-sizing: border-box;
 }
 
 .modal-content {
   background: linear-gradient(135deg, rgba(30, 70, 75, 0.98), rgba(15, 40, 45, 0.98));
-  width: 650px; /* Légèrement plus large pour l'aisance */
-  padding: 20px;
+  width: 100%;
+  max-width: 650px;       /* Largeur PC */
+  padding: 25px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
   color: white;
   box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-  cursor: default; /* Le curseur redevient normal sur la carte pour ne pas tromper l'utilisateur */
-} 
+  cursor: default;
+  max-height: 90vh;       /* 🔥 Empêche de sortir de l'écran sur mobile */
+  overflow-y: auto;       /* 🔥 Permet de scroller DANS la carte si besoin */
+}
+
+/* --- RESPONSIVE MOBILE --- */
 @media (max-width: 768px) {
-  .modal-content {
-    width: 95%;          /* Plus large sur mobile */
-    max-height: 90vh;    /* Ne dépasse pas de l'écran */
-    padding: 20px;
-    border-radius: 15px;
-    overflow-y: auto;    /* Scroll interne si le texte est long */
+  .modal-body {
+    flex-direction: column; /* Image au dessus du texte sur mobile */
+    align-items: center;
   }
   
-  #modal-image {
-    width: 100%;         /* L'image s'adapte à la largeur du téléphone */
-    height: auto;
+  .modal-left {
+    width: 180px;         /* Image plus petite sur mobile */
   }
-  @media (min-width: 769px) {
-  .modal-content {
-    width: 500px;        /* Taille fixe sur PC */
-    padding: 40px;
-    border-radius: 10px;
+
+  #modal-title-main {
+    font-size: 1.6rem;    /* Titre moins énorme sur mobile */
+    text-align: center;
+  }
+
+  .modal-header-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #modal-badge-main {
+    margin-left: 0;       /* Centre le badge sur mobile */
+    margin-top: 10px;
   }
 }
-}
+
+/* --- BOUTON FERMER --- */
 #close-modal {
   position: absolute;
-  top: 20px;
-  right: 25px;       /* Le force à rester à droite */
-  font-size: 35px;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
   line-height: 1;
   color: white;
   cursor: pointer;
-  opacity: 0.5;
-  z-index: 100;      /* S'assure qu'il est au-dessus de tout */
+  opacity: 0.6;
+  z-index: 100;
   transition: opacity 0.2s;
 }
 
-#close-modal:hover {
-  opacity: 1;        /* Devient brillant au survol */
-}
+#close-modal:hover { opacity: 1; }
+
+/* --- CONTENU MODAL --- */
 .modal-body { 
   display: flex; 
   gap: 25px; 
-  align-items: flex-start; 
 }
 
-/* --- COLONNE GAUCHE (Image + More Details) --- */
-.modal-left { 
-  width: 250px; 
-  flex-shrink: 0;
-  display: flex; 
-  flex-direction: column; 
-  gap: 20px; 
-}
+.modal-left { width: 250px; flex-shrink: 0; }
+#modal-img-main { width: 100%; border-radius: 12px; }
 
-#modal-img-main { 
-    width: 100%; 
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.btn-more-details {
-  display: block;
-  text-align: center;
-  padding: 10px ;
-  border-radius: 30px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: bold;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: white;
-  transition: all 0.3s ease;
-}
-
-/* --- COLONNE DROITE (Infos + Actions) --- */
-.modal-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+.modal-right { flex: 1; display: flex; flex-direction: column; }
 
 /* Alignement Titre + Badge */
 .modal-header-row {
