@@ -1,11 +1,13 @@
 const table = document.querySelector(".table");
 let allBooks = [];
 
+// 1. On crée UNE SEULE hover card pour toute la page (PC uniquement)
 const hCard = document.createElement("div");
 hCard.className = "hover-card";
 hCard.style.display = "none";
 document.body.appendChild(hCard);
 
+// 2. Chargement des données
 fetch("data/books.json")
   .then(res => res.json())
   .then(data => {
@@ -37,7 +39,8 @@ function renderTable(booksToDisplay) {
 
       // --- LOGIQUE HOVER (PC UNIQUEMENT) ---
       cell.addEventListener("mouseenter", () => {
-        if (window.innerWidth <= 768) return; // Désactivé sur mobile
+        // Bloque l'affichage si on est sur mobile
+        if (window.innerWidth <= 768) return; 
 
         const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
         hCard.innerHTML = `
@@ -73,14 +76,15 @@ function renderTable(booksToDisplay) {
         let left = e.clientX + 20;
         let top = e.clientY - 40; 
 
+        // Sécurité bord droit
         if (left + cardWidth + margin > window.innerWidth) {
             left = e.clientX - cardWidth - 20;
         }
-
+        // Sécurité bord bas
         if (top + cardHeight + margin > window.innerHeight) {
             top = window.innerHeight - cardHeight - margin;
         }
-
+        // Sécurité bord haut
         if (top < popOutSpace) {
             top = popOutSpace;
         }
@@ -98,6 +102,7 @@ function renderTable(booksToDisplay) {
       // --- LOGIQUE CLIC (PC & MOBILE) ---
       cell.addEventListener("click", () => openModal(book, themeColor));
       table.appendChild(cell);
+
     } else {
       const empty = document.createElement("div");
       empty.className = "empty-cell";
@@ -106,11 +111,12 @@ function renderTable(booksToDisplay) {
   }
 }
 
+// 3. GESTION DE LA MODAL
 function openModal(book, themeColor) {
     const modal = document.getElementById("book-modal");
-    const modalContent = modal.querySelector(".modal-content"); // On cible le contenu
+    const modalContent = modal.querySelector(".modal-content");
 
-    // 1. Remplissage des données
+    // Remplissage
     document.getElementById("modal-img-main").src = book.image || "";
     document.getElementById("modal-title-main").innerText = book.title;
     document.getElementById("modal-author-main").innerText = book.author || "Unknown";
@@ -124,40 +130,45 @@ function openModal(book, themeColor) {
     const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
     document.getElementById("modal-stars-main").innerHTML = starsHTML;
 
-    document.getElementById("modal-pages-main").innerText = book.pages || "N/A";
-    document.getElementById("modal-year-main").innerText = book.year || "N/A";
+    // Stats additionnelles
+    const pagesEl = document.getElementById("modal-pages-main");
+    const yearEl = document.getElementById("modal-year-main");
+    if(pagesEl) pagesEl.innerText = book.pages || "N/A";
+    if(yearEl) yearEl.innerText = book.year || "N/A";
 
+    // Bouton YouTube
     const youtubeBtn = document.getElementById("link-youtube");
-    if (book.youtube) {
-        youtubeBtn.href = book.youtube;
-        youtubeBtn.style.display = "block";
-    } else {
-        youtubeBtn.style.display = "none";
+    if (youtubeBtn) {
+        if (book.youtube) {
+            youtubeBtn.href = book.youtube;
+            youtubeBtn.style.display = "block";
+        } else {
+            youtubeBtn.style.display = "none";
+        }
     }
 
-    // --- CORRECTION MOBILE ---
-    // 2. Réinitialise le scroll interne de la modal (pour ne pas commencer en bas)
+    // --- LOGIQUE D'AFFICHAGE ---
+    // On remonte le scroll de la modal au début
     if (modalContent) modalContent.scrollTop = 0;
 
-    // 3. Affiche la modal
     modal.classList.remove("hidden");
     
-    // 4. Bloque le scroll sur TOUTE la page (body + html pour mobile)
+    // Bloque le scroll de la page de fond
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden'; 
 }
 
-// Fonction de fermeture centralisée pour nettoyer les styles
+// 4. FERMETURE
 function closeModal() {
   const modalEl = document.getElementById("book-modal");
   modalEl.classList.add("hidden");
   
-  // Réactive le scroll partout
+  // On libère le scroll
   document.body.style.overflow = '';
   document.documentElement.style.overflow = '';
 }
 
-// Liaison des événements de fermeture
+// Événements de fermeture
 document.getElementById("close-modal").onclick = closeModal;
 
 window.onclick = function(event) {
