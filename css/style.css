@@ -131,6 +131,27 @@ h1 {
   box-shadow: 0 25px 50px rgba(0,0,0,0.6);
   cursor: default; /* Le curseur redevient normal sur la carte pour ne pas tromper l'utilisateur */
 } 
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;          /* Plus large sur mobile */
+    max-height: 90vh;    /* Ne dépasse pas de l'écran */
+    padding: 20px;
+    border-radius: 15px;
+    overflow-y: auto;    /* Scroll interne si le texte est long */
+  }
+  
+  #modal-image {
+    width: 100%;         /* L'image s'adapte à la largeur du téléphone */
+    height: auto;
+  }
+  @media (min-width: 769px) {
+  .modal-content {
+    width: 500px;        /* Taille fixe sur PC */
+    padding: 40px;
+    border-radius: 10px;
+  }
+}
+}
 #close-modal {
   position: absolute;
   top: 20px;
