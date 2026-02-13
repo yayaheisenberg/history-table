@@ -8,39 +8,116 @@
     "theme": "nazisme",
     "image": "images/bb.jpg",
     "rating": 4,
-  "youtube" :"https://youtu.be/cDJPp2exJAg?si=fuGCNb_uCdnJZmrL",
-  "pages" : 576
+    "youtube": "https://youtu.be/cDJPp2exJAg?si=fuGCNb_uCdnJZmrL",
+    "pages": 576
   },
   {
     "number": 2,
-    "code": "Ttr",
-    "title": "The Third Reich",
-    "theme": "nazism",
-    "image": "images/aa.jpg",
-    "rating": 5
+    "code": "Isl",
+    "title": "Islam autoritarisme et sous-développement",
+    "author": "Ahmet.T.Kuru",
+    "description": "Pourquoi les pays à majorité musulmane affichent-ils des niveaux élevés d’autoritarisme et de faibles niveaux de développement socio-économique par rapport aux moyennes mondiales ?",
+    "theme": "islam",
+    "image": "images/islam et autoritarisme.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/CuYz2j5KhHU?si=qKocqYWNA2Nvnnxs",
+    "pages": 429
   },
   {
     "number": 3,
-    "code": "Sho",
-    "title": "Shoah",
-    "theme": "holocaust",
-    "image": "images/ss.jpg",
-    "rating": 5
+    "code": "jui",
+    "title": "Juifs et musulmans en Algérie VIIe-XXe siècle",
+    "author": "Lucette Valensi",
+    "description": "Juifs et musulmans ont partagé en Algérie une longue histoire qui s’acheva en 1962 avec l’indépendance du pays. Si, en 1954, on y comptait environ 130 000 juifs, il n’en reste plus aujourd’hui. Pourquoi cette coexistence a-t-elle pris fin ?",
+    "theme": "algérie",
+    "image": "images/juifs et musulmans.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/OZTDRhcVNqk?si=CCT9m1Kk2Tzy5Ghv",
+    "pages": 288
   },
   {
     "number": 4,
-    "code": "Nmt",
-    "title": "Night",
-    "theme": "holocaust",
-    "image": "images/night.jpg",
-    "rating": 4
+    "code": "Pal",
+    "title": "Palettes",
+    "author": "Alain Jaubert",
+    "description": "Écrire, parler sur des tableaux ? Les tableaux ne parleraient donc pas d'eux-mêmes ? Ne serait-ce pas ajouter un bavardage inutile, un obstacle au libre plaisir des images ? Justement, non. Le paradoxe n'est qu'apparent. Autant que de toile, de bois, de pigments, les tableaux sont faits de mots. Pas de voir sans savoir",
+    "theme": "art",
+    "image": "images/palettes.jpg",
+    "rating": 3,
+    "youtube": "https://youtu.be/rvC8PolsB2E?si=ewx-BU8k0d2wixve",
+    "pages": 416
   },
   {
     "number": 5,
-    "code": "Cw",
-    "title": "Cold War",
-    "theme": "coldwar",
-    "image": "images/coldwar.jpg",
-    "rating": 3
+    "code": "Civ",
+    "title": "La civilisation judéo-chrétienne",
+    "author": "Sophie Bessis",
+    "description": "Depuis quarante ans, le concept de « civilisation judéo-chrétienne » domine les discours politiques et médiatiques en Occident, présenté comme le socle culturel de l’Europe et de l’Amérique du Nord. Mais que cache cette expression devenue une référence hégémonique ?",
+    "theme": "Europe",
+    "image": "images/juif et muslim.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/EGy_YAE7Hco?si=TUt9Ir05Qo5zpo03",
+    "pages": 112
+  },
+  {
+    "number": 6,
+    "code": "Nec",
+    "title": "Le nectar cacheté",
+    "author": "Safiyyu ar-Rahmân Al-Mubârakfûrî",
+    "description": "C’est dans le cadre d’un concours organisé par la ligue islamique portant sur la biographie du Prophète que notre auteur rédigea son texte. Livre qui connut un retentissement incroyable dû à sa qualité. Il fut depuis, traduit en plusieurs langues et expliqué par son auteur au cours de nombreuses conférences.",
+    "theme": "islam",
+    "image": "images/nectar.jpg",
+    "rating": 5,
+    "youtube": "https://youtu.be/8OjP6y0fPJM?si=hHFzbqRb6hGbsHKq",
+    "pages": 543
+  },
+   {
+    "number": 7,
+    "code": "Sag",
+    "title": "Sagesses sublimes",
+    "author": "Ibn Arabi",
+    "description": "cet ouvrage rassemble les sagesses attribuées à Ibn Arabî, le plus grand des maîtres (al-shaykh al-akbar). De sa propre plume ou de la plume de l’un de ses disciples, ces paroles s’accordent parfaitement, selon nous, à son esprit et demeurent des clés essentielles pour le cheminement spirituel",
+    "theme": "philosophie",
+    "image": "images/farabi.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/EQC2KKiqjDE?si=oOqzf-7fpMfGvPjZ",
+    "pages": 120
+  }, 
+  {
+    "number": 8,
+    "code": "Sir",
+    "title": "Sira",
+    "author": "Ibn Ishaq",
+    "description": "Cet ouvrage, intitulée Muhammad l’Envoyé d’Allah, est l’abrégé de la plus ancienne biographie du Prophète (saw) rédigée quelques dizaines d’années seulement après sa mort par Ibn Ishaq",
+    "theme": "islam",
+    "image": "images/ibn ishak.jpg",
+    "rating": 3,
+    "youtube": "https://youtu.be/HDO3DfR3ZGE?si=z451_ave-VpyHloR",
+    "pages": 504
+  },
+    {
+    "number": 9,
+    "code": "Cor",
+    "title": "L'histoire du texte du Coran",
+    "author": "Muhhamad M.Al-Azami",
+    "description": "Dans cet ouvrage de grande envergure, l’auteur examine la préservation immaculée du texte sacré en abordant les nombreuses accusations portées à son encontre. La réception des révélations divines, le rôle crucial du Prophète Muhammad dans la diffusion et la compilation des versets, et la mise en place de la forme finale du Coran sont examinés scientifiquement.",
+    "theme": "islam",
+    "image": "images/coran.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/7xec4htySZg?si=p-HoXyapMVSGaGii",
+    "pages": 462
+  },
+    {
+    "number": 10,
+    "code": "Cre",
+    "title": "La sagesse dans la création",
+    "author": "Al-Ghazali",
+    "description": "Un regard spritiuel sur la nature et la création divine pour se rapprocher du divin, telle est la vision adoptée par le philosophe dans son texte à la fois humain et mystique",
+    "theme": "philosophie",
+    "image": "images/ghazali.jpg",
+    "rating": 4,
+    "youtube": "https://youtu.be/Sgcmqtdgtlk?si=Tu0mZn_tN6TQmSDb",
+    "pages": 114
   }
 ]
+
