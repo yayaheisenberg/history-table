@@ -1,26 +1,31 @@
 const table = document.querySelector(".table");
 let allBooks = [];
-
+let originalBooks = [];
+let isAlphaSorted = false;
 const hCard = document.createElement("div");
 hCard.className = "hover-card";
 hCard.style.display = "none";
 document.body.appendChild(hCard);
 
+// 1. CHARGEMENT DES DONNÉES
 fetch("data/books.json")
   .then(res => res.json())
   .then(data => {
     allBooks = data;
+    originalBooks = [...data];
     renderTable(allBooks);
+    initFilterLogic();
   });
 
 function getThemeColor(theme) {
-  const colors = { holocaust: "#f39c12", nazisme: "#ff2d2d", coldwar: "#3498db" };
-  return colors[theme] || "#1e6b73";
+  const colors = { algérie: "#00bb06", nazisme: "#ff2d2d", islam: "#00ff8c", Europe: "#ff7c1f", art: "#ffff00", philosophie: "#00e5ff" };
+  return colors[theme.toLowerCase()] || "#008daa";
 }
 
+// 2. RENDU DU TABLEAU
 function renderTable(booksToDisplay) {
   table.innerHTML = "";
-  const totalSlots = 90;
+  const totalSlots = 48;
 
   for (let i = 0; i < totalSlots; i++) {
     const book = booksToDisplay[i];
@@ -35,16 +40,14 @@ function renderTable(booksToDisplay) {
         <div class="title">${book.title}</div>
       `;
 
-      // --- LOGIQUE HOVER (PC UNIQUEMENT) ---
       cell.addEventListener("mouseenter", () => {
-        if (window.innerWidth <= 768) return; // Désactivé sur mobile
-
         const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
         hCard.innerHTML = `
           <div class="hover-header">
             <div class="hover-rating-section">
               <div class="hover-score" style="color: #ffcc00;">${book.rating}.0</div>
               <div class="hover-stars" style="color: #ffcc00;">${starsHTML}</div>
+              <span class="hover-rating-label">My rating</span>
             </div>
             <div class="hover-image-container">
               <img src="${book.image}" alt="Couverture">
@@ -64,27 +67,10 @@ function renderTable(booksToDisplay) {
 
       cell.addEventListener("mousemove", (e) => {
         if (window.innerWidth <= 768 || hCard.style.display === "none") return;
-
-        const cardWidth = 450; 
-        const cardHeight = 350;
+        const cardWidth = 450;
         const margin = 20;
-        const popOutSpace = 70;
-
-        let left = e.clientX + 20;
-        let top = e.clientY - 40; 
-
-        if (left + cardWidth + margin > window.innerWidth) {
-            left = e.clientX - cardWidth - 20;
-        }
-
-        if (top + cardHeight + margin > window.innerHeight) {
-            top = window.innerHeight - cardHeight - margin;
-        }
-
-        if (top < popOutSpace) {
-            top = popOutSpace;
-        }
-
+        let left = e.clientX > window.innerWidth / 2 ? e.clientX - cardWidth - margin : e.clientX + margin;
+        let top = e.clientY - 40;
         hCard.style.left = `${left}px`;
         hCard.style.top = `${top}px`;
         hCard.style.opacity = "1";
@@ -95,7 +81,6 @@ function renderTable(booksToDisplay) {
         hCard.style.opacity = "0";
       });
 
-      // --- LOGIQUE CLIC (PC & MOBILE) ---
       cell.addEventListener("click", () => openModal(book, themeColor));
       table.appendChild(cell);
     } else {
@@ -106,54 +91,220 @@ function renderTable(booksToDisplay) {
   }
 }
 
-function openModal(book, themeColor) {
-    const modal = document.getElementById("book-modal");
+// 3. LOGIQUE DE FILTRAGE
+function initFilterLogic() {
+  const filterWrapper = document.getElementById("filter-dropdown");
+  const mainPanel = document.getElementById('main-panel');
+  const categoryPanel = document.getElementById('category-panel');
+  const ratingPanel = document.getElementById('rating-panel');
+  
+  const filterDisplay = document.querySelector(".filter-display");
+  const alphaBtn = document.querySelector('[data-value="alpha"]');
+  const openCatBtn = document.querySelector('[data-value="open-categories"]');
+  const openRatingBtn = document.querySelector('[data-value="rating"]');
+  
+  const backBtn = document.getElementById('back-to-main');
+  const backToMainRating = document.getElementById('back-to-main-rating');
+  
+  const applyBtn = document.getElementById('apply-filter');
+  const applyRatingBtn = document.getElementById('apply-rating');
+  
+  const categoryCheckboxes = document.querySelectorAll('.cat-check');
+  const ratingCheckboxes = document.querySelectorAll('.rating-check');
+  
+  const resetBtn = document.getElementById('reset-filter');
+  const resetRatingBtn = document.getElementById('reset-rating');
+  if (ratingPanel) {
+  ratingPanel.onclick = (e) => {
+    e.stopPropagation();
+  };
+}
 
-    document.getElementById("modal-img-main").src = book.image || "";
-    document.getElementById("modal-title-main").innerText = book.title;
-    document.getElementById("modal-author-main").innerText = book.author || "Unknown";
-    document.getElementById("modal-description-main").innerText = book.description || "Aucune description disponible.";
+// Fais la même chose pour le panneau catégorie si ce n'est pas déjà fait
+if (categoryPanel) {
+  categoryPanel.onclick = (e) => {
+    e.stopPropagation();
+  };
+}
 
-    const badge = document.getElementById("modal-badge-main");
-    badge.innerText = book.theme;
-    badge.style.backgroundColor = themeColor;
+  // FONCTION FERMER TOUS LES MENUS
+  function closeFilter() {
+    filterWrapper.classList.remove("active");
+    mainPanel.classList.remove("show");
+    categoryPanel.classList.remove("show");
+    if (ratingPanel) ratingPanel.classList.remove("show");
+  }
 
-    document.getElementById("modal-rating-num").innerText = `${book.rating}.0`;
-    const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
-    document.getElementById("modal-stars-main").innerHTML = starsHTML;
+  // FONCTION DE FILTRAGE GLOBALE
+  function applyAllFilters() {
+    const checkedCats = Array.from(categoryCheckboxes).filter(cb => cb.checked).map(cb => cb.value.toLowerCase());
+    const checkedRatings = Array.from(ratingCheckboxes).filter(cb => cb.checked).map(cb => parseInt(cb.value));
 
-    document.getElementById("modal-pages-main").innerText = book.pages || "N/A";
-    document.getElementById("modal-year-main").innerText = book.year || "N/A";
+    let filtered = allBooks.filter(book => {
+      const matchCat = checkedCats.length === 0 || checkedCats.includes(book.theme.toLowerCase());
+      const matchRating = checkedRatings.length === 0 || checkedRatings.includes(book.rating);
+      return matchCat && matchRating;
+    });
 
-    const youtubeBtn = document.getElementById("link-youtube");
-    if (book.youtube) {
-        youtubeBtn.href = book.youtube;
-        youtubeBtn.style.display = "block";
-    } else {
-        youtubeBtn.style.display = "none";
+    if (isAlphaSorted) {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
     }
 
-    modal.classList.remove("hidden");
-    
-    // Bloquer le scroll (PC & MOBILE pour plus de confort)
-    document.body.style.overflow = 'hidden';
+    renderTable(filtered);
+    closeFilter();
+  }
+
+  // ÉVÉNEMENTS D'OUVERTURE
+  filterDisplay.onclick = (e) => {
+    e.stopPropagation();
+    if (filterWrapper.classList.contains("active")) closeFilter();
+    else {
+      filterWrapper.classList.add("active");
+      mainPanel.classList.add("show");
+    }
+  };
+
+  document.addEventListener("click", (e) => {
+    if (filterWrapper.classList.contains("active") && !filterWrapper.contains(e.target)) closeFilter();
+  });
+
+  // NAVIGATION ENTRE PANNEAUX
+  if (openCatBtn) {
+    openCatBtn.onclick = (e) => {
+      e.stopPropagation();
+      mainPanel.classList.remove("show");
+      categoryPanel.classList.add("show");
+    };
+  }
+
+  if (openRatingBtn) {
+    openRatingBtn.onclick = (e) => {
+      e.stopPropagation();
+      mainPanel.classList.remove("show");
+      ratingPanel.classList.add("show");
+    };
+  }
+
+  if (backBtn) {
+    backBtn.onclick = (e) => {
+      e.stopPropagation();
+      categoryPanel.classList.remove("show");
+      mainPanel.classList.add("show");
+    };
+  }
+
+  if (backToMainRating) {
+    backToMainRating.onclick = (e) => {
+      e.stopPropagation();
+      ratingPanel.classList.remove("show");
+      mainPanel.classList.add("show");
+    };
+  }
+
+  // ACTIONS (TRI, APPLY, RESET)
+  if (alphaBtn) {
+    alphaBtn.onclick = (e) => {
+      e.stopPropagation();
+      isAlphaSorted = !isAlphaSorted;
+      alphaBtn.style.color = isAlphaSorted ? "#00d4ff" : "white";
+      applyAllFilters();
+    };
+  }
+
+  if (applyBtn) applyBtn.onclick = applyAllFilters;
+  if (applyRatingBtn) applyRatingBtn.onclick = applyAllFilters;
+
+  if (resetBtn) {
+    resetBtn.onclick = (e) => {
+      e.stopPropagation();
+      categoryCheckboxes.forEach(cb => cb.checked = false);
+      applyAllFilters();
+    };
+  }
+
+  if (resetRatingBtn) {
+    resetRatingBtn.onclick = (e) => {
+      e.stopPropagation();
+      ratingCheckboxes.forEach(cb => cb.checked = false);
+      applyAllFilters();
+    };
+  }
 }
+
+// 4. MODAL
+function openModal(book, themeColor) {
+  const modal = document.getElementById("book-modal");
+  document.getElementById("modal-img-main").src = book.image || "";
+  document.getElementById("modal-title-main").innerText = book.title;
+  document.getElementById("modal-author-main").innerText = book.author || "Unknown";
+  document.getElementById("modal-description-main").innerText = book.description || "Aucune description disponible.";
+  const badge = document.getElementById("modal-badge-main");
+  badge.innerText = book.theme;
+  badge.style.backgroundColor = themeColor;
+  document.getElementById("modal-rating-num").innerText = `${book.rating}.0`;
+  document.getElementById("modal-stars-main").innerHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
+  document.getElementById("modal-pages-main").innerText = book.pages || "N/A";
+  document.getElementById("modal-year-main").innerText = book.year || "N/A";
   
-const modalEl = document.getElementById("book-modal");
+  const pagesElem = document.getElementById("modal-pages-main");
+  const yearElem = document.getElementById("modal-year-main");
+  if(pagesElem) pagesElem.innerText = book.pages || "N/A";
+  if(yearElem) yearElem.innerText = book.year || "N/A";
+
+  // Gestion du bouton ACHETER (Lien externe)
+  const buyBtn = document.getElementById("btn-buy-book");
+  if (buyBtn) {
+    buyBtn.href = book.buyLink || "https://www.amazon.fr"; // Utilise le lien du JSON ou un défaut
+    buyBtn.target = "_blank";
+  }
+  const moreDetailsBtn = document.querySelector(".btn-more-details");
+  if (moreDetailsBtn) {
+    moreDetailsBtn.href = book.youtube || "https://www.youtube.com";
+    moreDetailsBtn.target = "_blank";
+  }
+  modal.classList.remove("hidden");
+  document.body.style.overflow = 'hidden';
+}
 
 function closeModal() {
-  modalEl.classList.add("hidden");
-  document.body.style.overflow = 'auto'; // Réactive le scroll
+  document.getElementById("book-modal").classList.add("hidden");
+  document.body.style.overflow = 'auto';
 }
 
-document.getElementById("close-modal").onclick = closeModal;
+const closeBtn = document.getElementById("close-modal");
+if (closeBtn) closeBtn.onclick = closeModal;
+window.onclick = (e) => { if (e.target.id === "book-modal") closeModal(); };
 
-window.onclick = function(event) {
-  if (event.target == modalEl) closeModal();
-};
+// --- GESTION DU CONTACT ET EMAILJS ---
+(function() { emailjs.init("MEZOTNid9-GNFm1ju"); })();
 
-document.addEventListener('keydown', function(event) {
-  if (event.key === "Escape" && !modalEl.classList.contains("hidden")) {
-    closeModal();
-  }
+const contactBtn = document.getElementById("contact-btn");
+const contactModal = document.getElementById("contact-modal");
+const closeContact = document.getElementById("close-contact");
+const contactForm = document.getElementById("contact-form");
+
+contactBtn.addEventListener("click", () => contactModal.classList.remove("hidden"));
+
+const hideContactModal = () => contactModal.classList.add("hidden");
+closeContact.addEventListener("click", hideContactModal);
+contactModal.addEventListener("click", (e) => { if (e.target === contactModal) hideContactModal(); });
+
+contactForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  const submitBtn = this.querySelector('button');
+  submitBtn.innerText = "Sending...";
+  submitBtn.disabled = true;
+
+  emailjs.sendForm('GOCSPX-hqy2d0S5yIj-rySrf', 'template_7fvqyhd', this)
+    .then(() => {
+      alert('Message sent successfully!');
+      submitBtn.innerText = "Send";
+      submitBtn.disabled = false;
+      contactForm.reset();
+      hideContactModal();
+    }, (error) => {
+      alert('Failed to send... ' + JSON.stringify(error));
+      submitBtn.innerText = "Send";
+      submitBtn.disabled = false;
+    });
 });
