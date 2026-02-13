@@ -1,50 +1,179 @@
-/* --- BASE --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   background-color: #0b2a2e;
   color: #e6f2f3;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
-  overflow-x: auto;
+
+  /* 🔥 CLÉ DU FIX */
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+ 
+
 }
 
-h1 {
-  font-size: 1.2rem;
-  letter-spacing: 3px;
-  border-bottom: 1px solid rgba(30, 107, 115, 0.5);
-  padding-bottom: 15px;
-  margin-bottom: 30px;
+.page-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* --- HEADER LAYOUT --- */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+}
+
+.header-title .subtitle {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  margin: 0;
+  color: #e6f2f3;
+}
+
+.header-title h1 {
+  font-size: 2.2rem;
+  margin: 0;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* --- FILTRES --- */
-.filters {
+/* --- BOUTONS STYLE PILL (GÉLULE) --- */
+.header-actions {
   display: flex;
-  gap: 10px;
-  margin-bottom: 40px;
+  gap: 15px;
+  align-items: center;
 }
 
-#search, .filters button, .filters select {
-  background: #123c41;
-  color: #fff;
-  border: 1px solid #1e6b73;
-  padding: 8px 15px;
-  border-radius: 4px;
+:root {
+  --dynamic-color: #00d4ff; 
+}
+
+/* Style commun pour KEY et le conteneur FILTER */
+.pill-button, .filter-wrapper {
+  position: relative; /* Crucial pour le menu flottant */
+  background: transparent;
+  border: 2px solid var(--dynamic-color);
+  color: var(--dynamic-color);
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px var(--dynamic-color);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 212, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  outline: none;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 25px; /* Largeur interne pour KEY */
 }
 
-.filters button.active {
-  background: #1e6b73;
-  border-color: #fff;
+/* Effet Hover Néon */
+.pill-button:hover, 
+.filter-wrapper:hover {
+  background: var(--dynamic-color) !important;
+  color: #0b2a2e !important;
+  box-shadow: 0 0 25px var(--dynamic-color);
+  text-shadow: none;
 }
 
+/* Le texte "FILTER:" à l'intérieur */
+.filter-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+    font-size: 0.8rem; /* Ajuste cette valeur (0.75rem ou 0.8rem) selon ton goût */
+}
+
+.filter-icon {
+  display: inline-block; /* Indispensable pour que la rotation fonctionne */
+  transition: transform 0.3s ease; /* Définit la vitesse et le style du mouvement */
+  font-size: 0.9rem;
+  color: inherit;
+}
+/* L'état quand le menu est ouvert */
+.filter-wrapper.active .filter-icon {
+  transform: rotate(90deg); /* La flèche tourne vers le bas */
+}
+
+
+
+/* Supprime l'ancienne règle et mets celle-ci */
+.dropdown-box.show {
+  display: block !important;
+}
+
+/* Optionnel : Assure-toi que le wrapper ne bloque pas les clics */
+.filter-wrapper {
+  pointer-events: auto;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  color: white;
+  padding-bottom: 10px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 -15px 15px -15px;
+}
+
+.dropdown-item .icon {
+  font-size: 1.2rem;
+  width: 20px;
+}
+
+/* Le conteneur qui va gérer le scroll horizontal sans toucher au reste */
+/* Zone de scroll du tableau */
+.table-scroll-area {
+  flex: 1;                /* Prend tout l'espace libre au milieu */
+  width: 100%;
+  overflow-x: auto;       /* Permet de glisser à droite */
+  overflow-y: hidden;     /* Pas de scroll haut/bas ici */
+  padding: 20px 0;
+  
+  /* --- SUPPRIMER LA BARRE VISUELLE --- */
+  scrollbar-width: none;  /* Pour Firefox */
+  -ms-overflow-style: none;  /* Pour Edge/IE */
+}
+
+/* Pour Chrome, Safari et ton navigateur actuel */
+.table-scroll-area::-webkit-scrollbar {
+  display: none;          /* La barre bleue disparaît totalement */
+}
 /* --- GRILLE PRINCIPALE --- */
 .table {
   display: grid;
-  grid-template-columns: repeat(18, 110px); 
-  gap: 8px;
-  padding-bottom: 50px;
+  grid-template-columns: repeat(12, 110px); /* 12 colonnes */
+  grid-template-rows: repeat(4, 140px);    /* 4 lignes fixes */
+  gap: 12px;
+  width: max-content; /* Force le tableau à être plus large que l'écran */
+  margin: 0;          /* Aligné à gauche pour commencer le scroll au début */
+  padding-bottom: 20px;
+  padding-left: 10px 
+;
 }
 
 .table:has(.cell:hover) .cell:not(:hover),
@@ -95,18 +224,40 @@ h1 {
   justify-content: center;
 }
 
+/* --- THÈMES --- */
+.algérie { color: #00bb06; }
+.nazisme { color: #f26d6d; }
+.islam { color: #00ff8c; }
+.Europe { color: #ff7c1f; }
+.art { color: #ffff00; }
+.philosophie { color: #00bbff; }
+/* --- GRILLE FANTÔME (CELLULES VIDES) --- */
 .empty-cell {
   width: 110px;
   height: 140px;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border: 1px dashed rgba(230, 242, 243, 0.15); /* Pointillés discrets */
   box-sizing: border-box;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* --- THÈMES --- */
-.holocaust { color: #f39c12; }
-.nazism { color: #f26d6d; }
-.coldwar { color: #3498db; }
+/* Petit effet décoratif : une micro-croix au centre des cases vides */
+.empty-cell::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(230, 242, 243, 0.05); 
+  font-size: 0.8rem;
+}
 
+/* Optionnel : La case s'illumine légèrement au survol */
+.empty-cell:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.02);
+}
 /* --- MODAL (Structure Globale) --- */
 .modal {
   position: fixed;
@@ -131,6 +282,57 @@ h1 {
   box-shadow: 0 25px 50px rgba(0,0,0,0.6);
   cursor: default; /* Le curseur redevient normal sur la carte pour ne pas tromper l'utilisateur */
 } 
+.modal-footer-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-stats-info {
+  display: flex;
+  gap: 30px; /* Espace augmenté entre les deux blocs */
+  color: rgba(230, 242, 243, 0.7);
+}
+.modal-stats-info span {
+  font-size: 1.1rem; /* Taille augmentée (était à 0.75rem) */
+  letter-spacing: 0.5px;
+}
+.modal-stats-info strong {
+  color: #00d4ff; /* Utilise ta couleur néon pour les libellés */
+  margin-right: 8px;
+  font-weight: 800;
+  font-size: 0.9rem; /* Les titres restent légèrement plus petits pour le style */
+}
+
+/* Valeurs dynamiques (les chiffres) */
+#modal-pages-main, 
+#modal-year-main {
+  color: white;
+  font-weight: 600;
+}
+.btn-buy-now {
+  background: #00d4ff; /* Ton bleu néon */
+  color: #0b2a2e;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.btn-buy-now:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
+}
 @media (max-width: 768px) {
   .modal-content {
     width: 95%;          /* Plus large sur mobile */
@@ -163,6 +365,13 @@ h1 {
   opacity: 0.5;
   z-index: 100;      /* S'assure qu'il est au-dessus de tout */
   transition: opacity 0.2s;
+  background: rgba(0, 0, 0, 0.2); 
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 #close-modal:hover {
@@ -220,16 +429,20 @@ h1 {
 
 #modal-title-main {
   display: inline;          /* Permet au badge de monter à côté */
-  font-size: 2.2rem;
+  font-size: 1,5rem;
   margin: 0;
+text-transform: uppercase; /* Optionnel : pour mettre tout en majuscules */
+padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la place au X */
+  line-height: 1,2;         /* Optionnel : ajuste l'espacement entre les lignes du titre */
 }
+
 
 #modal-badge-main {
   display: inline-block;
   width: fit-content;
-  padding: 10px 20px;       /* Un peu plus généreux pour remplir l'espace */
+  padding: 08px 15px;       /* Un peu plus généreux pour remplir l'espace */
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -248,20 +461,25 @@ h1 {
 
 /* Ligne d'action (Note + Bouton Acheter) */
 /* Ligne d'action (Note + Badge à droite) */
-.modal-rating-row { /* Ton HTML utilise modal-rating-row d'après ton message précédent */
+.modal-rating-row {
   display: flex;
-  align-items: center; 
-  width: 100%; /* Prend toute la largeur de la colonne droite */
-  gap: 25px;
-  margin-bottom: 30px;
-  padding: 20px;
+  align-items: center;
+  justify-content: space-between; /* Pousse le rating à gauche et le badge à droite */
+  width: 100%;
+  padding: 12px 15px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  box-sizing: border-box;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-sizing: border-box; /* Assure que le padding ne fait pas déborder la boîte */
 }
-.rating-display {
-  display: flex;
-  flex-direction: column;
+
+#modal-badge-main {
+  /* On retire le margin-left: auto car le justify-content fait déjà le travail */
+  margin-left: 10px; 
+  white-space: nowrap; /* Empêche le nom du thème de revenir à la ligne */
+  flex-shrink: 0; /* Empêche le badge de s'écraser si le titre est long */
+  font-size: 0.75rem;
+  padding: 6px 12px;
 }
 
 .big-rating { 
@@ -280,8 +498,15 @@ h1 {
   max-height: 150px;    /* Limite la hauteur si le texte est trop long */
   overflow-y: auto;     /* Ajoute une petite barre de défilement si besoin */
   padding-right: 10px;
+/* 🔥 AJOUTE CECI POUR CACHER LA BARRE DE SCROLL */
+  scrollbar-width: none;       /* Pour Firefox */
+  -ms-overflow-style: none;    /* Pour Internet Explorer et Edge */
 }
 
+/* 🔥 ET CECI POUR CHROME, SAFARI ET OPERA */
+.modal-description::-webkit-scrollbar {
+  display: none;
+}
 /* Supprime ou commente .btn-buy-book car tu ne l'utilises plus ici */
 .btn-buy-book { display: none; }
 
@@ -316,6 +541,8 @@ h1 {
   
   /* Permet à l'image de dépasser des bords */
   overflow: visible; 
+  will-change: left, top; /* Optimise la fluidité du mouvement */
+  transition: opacity 0.2s ease-out; /* On ne met pas de transition sur left/top sinon ça "traîne" */
 }
 
 .hover-header { 
@@ -377,4 +604,441 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 5px; /* Espace entre le score et les étoiles */
+}
+.hover-rating-label {
+  font-size: 01,9rem;          /* Petit pour l'élégance */
+  text-transform: uppercase;
+  color: rgb(255, 255, 255); /* Blanc semi-transparent */
+  font-weight: 700;
+  letter-spacing: 2px;        /* Plus d'espace entre les lettres pour le look "label" */
+  margin-top: -2px;           /* On le remonte légèrement vers les étoiles */
+  display: block;
+  text-align: center;
+}
+
+/* Optionnel : Une lueur très légère pour rappeler le thème */
+.hover-rating-label {
+  text-shadow: 0 0 5px rgb(255, 83, 83);
+}
+/* Container de la ligne */
+/* --- SECTION RATINGS CORRIGÉE --- */
+
+/* 1. La ligne (le conteneur) */
+.rating-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+/* 2. Effet au survol de la ligne */
+.rating-item:hover {
+  background: rgba(255, 204, 0, 0.503); /* Fond doré translucide */
+  border-color: rgba(255, 204, 0, 0.3);
+  transform: translateX(8px); /* Décalage fluide vers la droite */
+}
+
+/* 3. Animation des étoiles SVG au survol */
+.rating-item:hover .stars-display svg {
+  filter: drop-shadow(0 0 8px var(--gold));
+  transform: scale(1.1);
+}
+
+/* 4. État quand la checkbox est cochée (Ligne entière) */
+.rating-item:has(.rating-check:checked) {
+  background: rgba(255, 204, 0, 0.15);
+  border-color: var(--gold);
+}
+
+/* 5. Style des étoiles SVG par défaut */
+.stars-display {
+  display: flex;
+  gap: 4px;
+  pointer-events: none; /* Évite que les étoiles bloquent le clic sur le label */
+}
+
+.stars-display svg {
+  transition: all 0.3s ease;
+  color: var(--gold); /* Couleur pour les contours (stroke) */
+}
+
+/* 6. La Checkbox Custom (Checkmark) */
+.checkmark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid var(--gold);
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* Masquer la checkbox native */
+.rating-check {
+  position: absolute;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Remplissage de la case quand coché */
+.rating-check:checked ~ .checkmark {
+  background-color: var(--gold);
+}
+
+/* Le petit "V" à l'intérieur */
+.rating-check:checked ~ .checkmark::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0b2a2e; /* Couleur sombre du fond pour le contraste */
+  font-weight: 900;
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .hover-card {
+    /* LA PHRASE CLÉ : position fixed par rapport à la vitre du téléphone */
+    position: fixed !important; 
+    
+    /* PLACEMENT : 50% du haut et de la gauche de l'écran visible */
+    top: 20% !important;
+    left: 50% !important;
+    
+    
+    /* CENTRAGE PARFAIT : on décale la carte de sa propre moitié */
+    transform: translate(-50%, -50%) !important;
+
+    /* REGLAGES VISUELS */
+    width: 90% !important;
+    max-height: 80vh;
+    overflow-y: auto; /* Permet de lire si le texte est long */
+    pointer-events: auto !important; /* Permet de cliquer/scroller dessus */
+    z-index: 99999 !important;
+    opacity: 1 !important;
+    display: flex;
+  }
+
+  /* On redresse l'image pour qu'elle ne dépasse pas sur mobile */
+  .hover-image-container img {
+    margin-top: 0 !important;
+    max-height: 200px;
+    width: auto;
+    margin-bottom: 15px;
+  }
+}
+/* --- LE BOUTON FILTER (Version Fusionnée) --- */
+.filter-wrapper {
+  position: relative;        /* Crucial pour l'ancrage de la boîte de menu */
+  display: inline-flex;      /* Aligne le texte et l'icône proprement */
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;          /* Largeur stable pour ne pas bouger au clic */
+  height: 42px;
+  cursor: pointer;
+  
+  /* On reprend ici les styles de ta gélule (Pill) */
+  background: transparent;
+  border: 2px solid var(--dynamic-color);
+  color: var(--dynamic-color);
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px var(--dynamic-color);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 212, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+/* Effet Hover (Néon) */
+.filter-wrapper:hover {
+  background: var(--dynamic-color) !important;
+  color: #0b2a2e !important;
+  box-shadow: 0 0 25px var(--dynamic-color);
+  text-shadow: none;
+}
+
+/* Masquer le select d'origine s'il existe encore */
+#filter-select { display: none; }
+
+/* LA BOÎTE FLOTTANTE (Ton image 1) */
+.dropdown-box {
+  display: none; 
+  position: absolute;
+  top: 50px; /* Ajuste selon la hauteur de ton bouton */
+  right: 0;
+  width: 300px;
+  
+  /* --- EFFET TRANSPARENCE --- */
+  background: rgba(29, 186, 210, 0.75); /* Couleur de ton site (0b2a2e) mais en mode transparent (0.75) */
+  backdrop-filter: blur(12px);       /* Le flou derrière la boîte (effet verre dépoli) */
+  -webkit-backdrop-filter: blur(12px); /* Support pour Safari */
+  
+  /* --- BORDURE ET LUEUR --- */
+  border: 1px solid rgb(255, 255, 255); /* Bordure très fine de la couleur de ton thème */
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 100000; 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  cursor: default;
+}
+
+
+
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 -20px 20px -20px; /* On pousse les bords à fond */
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 10px;
+  border-radius: 12px; /* Plus arrondi pour les lignes */
+  transition: all 0.3s ease;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* On enlève l'effet néon au survol de la ligne */
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff !important; /* Garde le texte blanc même au hover */
+}
+
+/* AJOUTE CECI pour créer le petit carré autour de l'icône */
+.dropdown-item .icon {
+  background: rgba(255, 255, 255, 0.1); /* Fond légèrement blanc */
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px; /* Le look "App icon" de ta capture */
+  font-size: 1.1rem;
+  flex-shrink: 0; /* Empêche l'icône de s'écraser */
+}
+
+/* Conteneur de la ligne dans le filtre */
+#sub-categories .dropdown-item {
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  opacity: 1;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  cursor: pointer; /* La main apparaît sur toute la ligne */
+}
+
+/* Texte des catégories */
+#sub-categories .dropdown-item label {
+  color: #ffffff !important;
+  text-shadow: none !important; 
+  cursor: pointer;
+  flex-grow: 1;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0; /* Évite les décalages */
+}
+
+/* La checkbox */
+.cat-check {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--dynamic-color);
+  margin-left: 15px; /* Espace entre le texte et la case */
+}
+/* Néon pour chaque catégorie selon sa couleur */
+.cat-item span:first-child {
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* Nazisme */
+.cat-item.nazisme span:first-child {
+  color: #f26d6d;
+  text-shadow: 0 0 4px #f26d6d;
+}
+.cat-item.nazisme:hover span:first-child {
+  text-shadow: 0 0 10px #f26d6d, 0 0 20px #f26d6d, 0 0 30px #f26d6d;
+}
+
+/* Algérie */
+.cat-item.algérie span:first-child {
+  color: #00bb06;
+  text-shadow: 0 0 4px #00bb06;
+}
+.cat-item.algérie:hover span:first-child {
+  text-shadow: 0 0 10px #00bb06, 0 0 20px #00bb06, 0 0 30px #00bb06;
+}
+
+/* Islam */
+.cat-item.islam span:first-child {
+  color: #00ff8c;
+  text-shadow: 0 0 4px #00ff8c;
+}
+.cat-item.islam:hover span:first-child {
+  text-shadow: 0 0 10px #00ff8c, 0 0 20px #00ff8c, 0 0 30px #00ff8c;
+}
+/* Philosophie */
+.cat-item.philosophie span:first-child {
+  color: #00e5ff;
+  text-shadow: 0 0 4px #00e5ff;
+}
+.cat-item.philosophie:hover span:first-child {
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+}
+
+/* Art */
+.cat-item.art span:first-child {
+  color: #ffff00;
+  text-shadow: 0 0 4px #ffff00;
+}
+.cat-item.art:hover span:first-child {
+  text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00;
+}
+/* Europe */
+.cat-item.europe span:first-child {
+  color: #ff7c1f;
+  text-shadow: 0 0 4px #ff7c1f;
+}
+.cat-item.europe:hover span:first-child {
+  text-shadow: 0 0 10px #ff7c1f, 0 0 20px #ff7c1f, 0 0 30px #ff7c1f;
+}
+.cat-item input {
+  display: none;
+}
+.cat-item .checkmark {
+  position: relative;
+}
+
+/* le ✓ */
+.cat-item .checkmark::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+}
+
+/* quand c’est coché */
+.cat-item input:checked + .checkmark {
+  background-color: #f26d6d;
+}
+
+.cat-item input:checked + .checkmark::after {
+  opacity: 1;
+}
+.cat-item.nazisme { color: #f26d6d; }
+.cat-item.algérie { color: #00bb06; }
+.cat-item.islam { color: #00ff8c; }
+.cat-item.philosophie { color: #00e5ff; }
+.cat-item.art { color: #ffff00; }
+
+
+.cat-item input:checked + .checkmark {
+  background-color: currentColor;
+  border-color: currentColor;
+}
+.cat-item:hover span:first-child {
+  text-shadow: 0 0 12px currentColor,
+               0 0 25px currentColor;
+}
+
+
+
+.main-footer {
+  flex-shrink: 0;         /* Empêche le footer d'être écrasé */
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(230, 242, 243, 0.6);
+}
+/* --- FOOTER CONTACT PILL --- */
+.footer-pill {
+  height: 36px;              /* Un peu plus fin que KEY */
+  padding: 0 20px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4),
+              0 0 8px rgba(0, 212, 255, 0.2);
+}
+
+/* Hover identique à KEY */
+.footer-pill:hover {
+  background: var(--dynamic-color);
+  color: #0b2a2e;
+  box-shadow: 0 0 20px var(--dynamic-color);
+}
+.main-footer .footer-pill {
+  opacity: 0.85;
+}
+
+.main-footer .footer-pill:hover {
+  opacity: 1;
+}
+/* CONTACT MODAL */
+.contact-modal {
+  max-width: 420px;
+  width: 90%;
+  padding: 24px;
+  text-align: center;
+}
+
+.contact-modal h2 {
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--dynamic-color);
+  box-shadow: 0 0 8px var(--dynamic-color);
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  cursor: pointer;
+  font-size: 1.4rem;
 }
