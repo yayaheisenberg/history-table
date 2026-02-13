@@ -6,79 +6,266 @@
   <title>The History Table</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <h1>HISTORICAL NON-FICTION</h1>
+  <main class="page-content">
 
-  <div class="filters">
-    <input type="text" id="search" placeholder="Rechercher un livre..." />
-    <button data-theme="all" class="active">Tous</button>
-    <button data-theme="holocaust">Holocauste</button>
-    <button data-theme="nazism">Nazisme</button>
-    <button data-theme="coldwar">Guerre froide</button>
+    <header class="main-header">
+      <div class="header-title">
+        <p class="subtitle">The Periodic Table of</p>
+        <h1>HISTORICAL NON-FICTION</h1>
+      </div>
 
-    <select id="ratingFilter">
-      <option value="0">Toutes les notes</option>
-      <option value="3">⭐⭐⭐ et +</option>
-      <option value="4">⭐⭐⭐⭐ et +</option>
-      <option value="5">⭐⭐⭐⭐⭐</option>
-    </select>
-  </div>
+      <div class="header-actions">
+        <button class="pill-button" id="key-button">KEY</button>
 
-  <main class="table"></main>
+        <div class="filter-wrapper" id="filter-dropdown">
+          <div class="filter-display">
+            <span>FILTER:</span>
+            <span class="filter-icon">▷</span>
+          </div>
+
+          <div id="main-panel" class="dropdown-box">
+            <div class="dropdown-header">
+              <span>FILTER:</span>
+              <span class="icon-funnel">▽</span>
+            </div>
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-item" data-value="alpha">
+              <div class="icon">⇅</div>
+              <span>Alphabetical</span>
+            </div>
+
+            <div class="dropdown-item" data-value="open-categories">
+              <div class="icon">⊞</div>
+              <span>Categories</span>
+              <span style="margin-left:auto;">→</span>
+            </div>
+
+            <div class="dropdown-item" data-value="rating">
+              <div class="icon">★</div>
+              <span>Ratings</span>
+            </div>
+          </div>
+
+          <div id="category-panel" class="dropdown-box" style="display:none;">
+            <div class="dropdown-header">
+              <div id="back-to-main" style="cursor:pointer; display:flex; align-items:center; gap:10px;">
+                <span style="border:1px solid white; border-radius:4px; padding:0 5px;">←</span>
+                CATEGORY
+              </div>
+              <span class="icon-funnel">▽</span>
+            </div>
+            
+            <button id="reset-filter"
+              style="width:100%; padding:10px; border-radius:12px; border:2px solid #ffcccc; background:rgba(255,107,107,0.1); color:white; font-weight:800; cursor:pointer; text-transform:uppercase; margin-top:10px;">
+              Reset filters
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="category-list" style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
+              <label class="cat-item nazisme" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Nazisme</span>
+                <input type="checkbox" value="nazisme" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #f26d6d; border-radius:6px;"></span>
+              </label>
+
+              <label class="cat-item algérie" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Algérie</span>
+                <input type="checkbox" value="algérie" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #00bb06; border-radius:6px;"></span>
+              </label>
+
+              <label class="cat-item islam" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Islam</span>
+                <input type="checkbox" value="islam" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #00ff8c; border-radius:6px;"></span>
+              </label>
+
+              <label class="cat-item philosophie" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Philosophie</span>
+                <input type="checkbox" value="philosophie" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #00e5ff; border-radius:6px;"></span>
+              </label>
+
+              <label class="cat-item art" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Art</span>
+                <input type="checkbox" value="art" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffff00; border-radius:6px;"></span>
+              </label>
+
+              <label class="cat-item Europe" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <span>Europe</span>
+                <input type="checkbox" value="Europe" class="cat-check">
+                <span class="checkmark" style="width:20px; height:20px; border:2px solid #ff7c1f; border-radius:6px;"></span>
+              </label>
+            </div>
+
+            <button id="apply-filter"
+              style="width:100%; padding:12px; border-radius:12px; border:2px solid #00d4ff; background:rgba(0,212,255,0.1); color:white; font-weight:800; cursor:pointer; text-transform:uppercase;">
+              Apply
+            </button>
+          </div>
+
+          <div id="rating-panel" class="dropdown-box" style="display:none;">
+            <div class="dropdown-header">
+              <div id="back-to-main-rating" style="cursor:pointer; display:flex; align-items:center; gap:10px;">
+                <span style="border:1px solid white; border-radius:4px; padding:0 5px;">←</span>
+                RATING
+              </div>
+              <span class="icon-funnel">▽</span>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="rating-list" style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
+              
+              <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <div style="position:relative;">
+                  <input type="checkbox" value="5" class="rating-check">
+                  <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
+                </div>
+              </label>
+
+              <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <div style="position:relative;">
+                  <input type="checkbox" value="4" class="rating-check">
+                  <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
+                </div>
+              </label>
+
+              <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <div style="position:relative;">
+                  <input type="checkbox" value="3" class="rating-check">
+                  <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
+                </div>
+              </label>
+
+              <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <div style="position:relative;">
+                  <input type="checkbox" value="2" class="rating-check">
+                  <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
+                </div>
+              </label>
+
+              <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <div style="position:relative;">
+                  <input type="checkbox" value="1" class="rating-check">
+                  <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
+                </div>
+              </label>
+
+            </div>
+
+            <button id="apply-rating" class="pill-button" style="width:100%">Apply</button>
+            <button id="reset-rating" class="pill-button" style="width:100%; margin-top:10px; border-color:#ffcccc; color:#ffcccc;">Reset</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="table-scroll-area">
+      <main class="table" id="book-table"></main>
+    </div>
+
+  </main>
+
+  <footer class="main-footer">
+    <button class="pill-button footer-pill" id="contact-btn">Contact Us</button>
+    <div class="pagination">Page 1 / 5</div>
+  </footer>
 
   <div id="book-modal" class="modal hidden">
     <div class="modal-content">
       <span id="close-modal">&times;</span>
-      
-<div class="modal-body"> 
-  <div class="modal-left">
-    <img id="modal-img-main" src="" alt="Couverture du livre">
-    <div class="modal-buttons-container">
-      <a id="link-youtube" href="#" target="_blank" class="btn-more-details">
-        More Details <span>→</span>
-      </a>
+      <div class="modal-body">
+        <div class="modal-left">
+          <img id="modal-img-main" src="" alt="Couverture du livre">
+          <a id="link-youtube" href="#" target="_blank" class="btn-more-details">More Details →</a>
+        </div>
+        <div class="modal-right">
+          <h2 id="modal-title-main"></h2>
+          <p class="modal-author">By <span id="modal-author-main"></span></p>
+          <div class="modal-rating-row">
+            <span id="modal-rating-num" class="big-rating"></span>
+            <div>
+              <span class="rating-label">MY RATING</span>
+              <div id="modal-stars-main" class="stars"></div>
+            </div>
+            <div id="modal-badge-main"></div>
+          </div>
+          <p id="modal-description-main" class="modal-description"></p>
+        </div>
+      </div>
+     <div class="modal-footer-action">
+  <div class="modal-stats-info">
+    <span><strong>PAGES</strong> <span id="modal-pages-main">462</span></span>
+    <span><strong>PUBLISHED</strong> <span id="modal-year-main">2023</span></span>
+  </div>
+  
+  <a href="#" id="btn-buy-book" class="btn-buy-now">
+    ACHETER
+    <span class="buy-icon">🛒</span>
+  </a>
+</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="modal-right">
-    <h2 id="modal-title-main"></h2>
-    <p class="modal-author">By <span id="modal-author-main"></span></p>
-
-    <div class="modal-rating-row">
-      <span id="modal-rating-num" class="big-rating"></span>
-      <div class="my-rating-block">
-        <span class="rating-label">MY RATING</span>
-        <div id="modal-stars-main" class="stars"></div>
-      </div>
-      <div id="modal-badge-main" class="modal-category-badge"></div>
+  <div id="contact-modal" class="modal hidden">
+    <div class="modal-content contact-modal">
+      <span class="close-modal" id="close-contact">&times;</span>
+      <h2>Contact Us</h2>
+      <form id="contact-form" class="contact-form">
+        <input type="text" name="first_name" placeholder="First name" required>
+        <input type="text" name="last_name" placeholder="Last name" required>
+        <input type="email" name="user_email" placeholder="Email" required>
+        <textarea name="message" placeholder="Your message" rows="4" required></textarea>
+        <button type="submit" class="pill-button">Send</button>
+      </form>
     </div>
+  </div>
 
-    <p id="modal-description-main" class="modal-description"></p>
-
-
-  </div> </div>
-
-          <div class="modal-stats-grid">
-            <div class="stat-item">
-              <span class="stat-label">REVIEWS (2106)</span>
-              <span class="stat-value">4.5/5.0</span>
-              <div class="mini-stars">★★★★☆</div>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">PAGES</span>
-              <span id="modal-pages-main" class="stat-value"></span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">PUBLISHED</span>
-              <span id="modal-year-main" class="stat-value"></span>
-            </div>
-          </div>
-        </div> 
-      </div> 
-    </div> 
-  </div> 
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
