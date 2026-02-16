@@ -9,6 +9,7 @@
     "image": "images/bb.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/cDJPp2exJAg?si=fuGCNb_uCdnJZmrL",
+    "buyLink": "https://www.amazon.fr/dp/226207934X/ref=cm_sw_r_as_gl_apa_gl_i_7YT20DTMS5YXN6EA5RVW?linkCode=ml1&tag=templedulivre-21&linkId=ff37a933ce5825f0eaafd3726aa1f30d",
     "pages": 576,
     "year" : 1951
   },
@@ -22,6 +23,7 @@
     "image": "images/islam et autoritarisme.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/CuYz2j5KhHU?si=qKocqYWNA2Nvnnxs",
+    "buyLink": "https://www.amazon.fr/dp/2494535085/ref=cm_sw_r_as_gl_apa_gl_i_CCM5BS25XE6XRGW3A3FS?linkCode=ml1&tag=templedulivre-21&linkId=f040a87a359aaef7d7d8236112f2d766",
     "pages": 429,
     "year": 2024
   },
@@ -35,6 +37,7 @@
     "image": "images/juifs et musulmans.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/OZTDRhcVNqk?si=CCT9m1Kk2Tzy5Ghv",
+    "buyLink": "https://www.amazon.fr/dp/B0BQBFLJF9/ref=cm_sw_r_as_gl_apa_gl_i_W1ZEJMET2VF3WB1HMTDF?linkCode=ml1&tag=templedulivre-21&linkId=650ad507a5e5ba008e96a9e887acf896",
     "pages": 288,
     "year": 2023
   },
@@ -48,6 +51,7 @@
     "image": "images/palettes.jpg",
     "rating": 3,
     "youtube": "https://youtu.be/rvC8PolsB2E?si=ewx-BU8k0d2wixve",
+    "buyLink": "https://www.amazon.fr/dp/2072704502/ref=cm_sw_r_as_gl_apa_gl_i_GC3PGGW1J4WQFDETJYDG?linkCode=ml1&tag=templedulivre-21&linkId=c121e9c386133d8b7cedddc8d8a865b5", 
     "pages": 416,
     "year": 2017
   },
@@ -61,6 +65,7 @@
     "image": "images/juif et muslim.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/EGy_YAE7Hco?si=TUt9Ir05Qo5zpo03",
+    "buyLink": "https://www.amazon.fr/dp/B0FQDNJ3CS/ref=cm_sw_r_as_gl_apa_gl_i_ZDQANTWJ22N1Y41A5FRY?linkCode=ml1&tag=templedulivre-21&linkId=07f429cfe1ff62c58354216b193dff37",
     "pages": 112,
     "year": 2025
   },
@@ -74,7 +79,7 @@
     "image": "images/nectar.jpg",
     "rating": 5,
     "youtube": "https://youtu.be/8OjP6y0fPJM?si=hHFzbqRb6hGbsHKq",
-    "abuyLink": "https://www.amazon.fr/dp/B00INN6T4C/ref=cm_sw_r_as_gl_apa_gl_i_1KDW9CHSM7776B40BNAT?linkCode=ml1&tag=templedulivre-21&linkId=0f9f77da166b6a4f86bfc14e4a82051e",
+    "buyLink": "https://www.amazon.fr/dp/B00INN6T4C/ref=cm_sw_r_as_gl_apa_gl_i_1KDW9CHSM7776B40BNAT?linkCode=ml1&tag=templedulivre-21&linkId=0f9f77da166b6a4f86bfc14e4a82051e",
     "pages": 543,
     "year": 1976
   },
@@ -88,6 +93,7 @@
     "image": "images/farabi.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/EQC2KKiqjDE?si=oOqzf-7fpMfGvPjZ",
+    "buyLink": "https://www.amazon.fr/dp/B08KWX29B8/ref=cm_sw_r_as_gl_apa_gl_i_5KDHMN35233S8WE1T6HG?linkCode=ml1&tag=templedulivre-21&linkId=1c6206850ce67160e30ff3a4f7e95b5b",
     "pages": 120,
     "year": 2022
   }, 
@@ -101,6 +107,7 @@
     "image": "images/ibn ishak.jpg",
     "rating": 3,
     "youtube": "https://youtu.be/HDO3DfR3ZGE?si=z451_ave-VpyHloR",
+    "buyLink": "https://www.amazon.fr/dp/2290263184/ref=cm_sw_r_as_gl_apa_gl_i_HZZ0EATHKSGB5K6YSXSN?linkCode=ml1&tag=templedulivre-21&linkId=338e0044c758145d63f5fa76b3b649db",
     "pages": 504,
     "year": 2023
   },
@@ -114,6 +121,7 @@
     "image": "images/coran.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/7xec4htySZg?si=p-HoXyapMVSGaGii",
+    "buyLink":"https://www.amazon.fr/dp/295862711X/ref=cm_sw_r_as_gl_apa_gl_i_20RW425NGAX2QGFK21W4?linkCode=ml1&tag=templedulivre-21&linkId=b520a15fb3ea58cf1045aeda0b8dd49b",
     "pages": 462,
     "year": 2024
   },
