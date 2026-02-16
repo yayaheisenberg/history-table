@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The History Table</title>
   <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
@@ -97,9 +98,9 @@
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffff00; border-radius:6px;"></span>
               </label>
 
-              <label class="cat-item Europe" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+              <label class="cat-item europe" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Europe</span>
-                <input type="checkbox" value="Europe" class="cat-check">
+                <input type="checkbox" value="europe" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #ff7c1f; border-radius:6px;"></span>
               </label>
             </div>
@@ -266,6 +267,29 @@
   </div>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <div id="key-modal" class="modal hidden">
+  <div class="key-modal-content">
+    <div id="close-key">✕</div>
+    
+    <div class="key-preview-card">
+      <div class="preview-top">
+        <span>Page #</span>
+        <span>Category</span>
+      </div>
+      <div class="preview-symbol">Symbol</div>
+      <div class="preview-title">Book Title</div>
+    </div>
+
+    <div class="key-grid">
+      <div class="key-item key-algérie"><span class="key-number">01</span><span class="key-label">Algérie</span></div>
+      <div class="key-item key-nazisme"><span class="key-number">02</span><span class="key-label">Nazisme</span></div>
+      <div class="key-item key-islam"><span class="key-number">03</span><span class="key-label">Islam</span></div>
+      <div class="key-item key-europe"><span class="key-number">04</span><span class="key-label">Europe</span></div>
+      <div class="key-item key-art"><span class="key-number">05</span><span class="key-label">Art</span></div>
+      <div class="key-item key-philosophie"><span class="key-number">06</span><span class="key-label">Philosophie</span></div>
+    </div>
+  </div>
+</div>
   <script src="js/script.js"></script>
 </body>
 </html>
