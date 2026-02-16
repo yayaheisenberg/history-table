@@ -18,17 +18,28 @@ fetch("data/books.json")
   });
 
 function getThemeColor(theme) {
-  const colors = { algérie: "#00bb06", nazisme: "#ff2d2d", islam: "#00ff8c", Europe: "#ff7c1f", art: "#ffff00", philosophie: "#00e5ff" };
+  const colors = { algérie: "#00bb06", nazisme: "#ff2d2d", islam: "#00ff8c", europe: "#ff7c1f", art: "#ffff00", philosophie: "#00e5ff" };
   return colors[theme.toLowerCase()] || "#008daa";
 }
-
 // 2. RENDU DU TABLEAU
 function renderTable(booksToDisplay) {
   table.innerHTML = "";
-  const totalSlots = 48;
+
+  // 1. On calcule combien de colonnes peut contenir l'écran
+  // (On divise la largeur de la table par la largeur d'une cellule + gap)
+  const cellWidth = 110 + 12; // largeur cellule + gap
+  const columns = Math.floor(table.offsetWidth / cellWidth);
+  
+  // 2. On définit un nombre de lignes minimum (ex: 5) ou on calcule pour remplir la hauteur
+  const minRows = 6; 
+  const totalRequiredSlots = Math.max(booksToDisplay.length, columns * minRows);
+  
+  // 3. On arrondit au multiple de colonnes supérieur pour finir la ligne proprement
+  const totalSlots = Math.ceil(totalRequiredSlots / columns) * columns;
 
   for (let i = 0; i < totalSlots; i++) {
     const book = booksToDisplay[i];
+    
     if (book) {
       const cell = document.createElement("div");
       const themeColor = getThemeColor(book.theme);
@@ -41,6 +52,7 @@ function renderTable(booksToDisplay) {
       `;
 
       cell.addEventListener("mouseenter", () => {
+        if (window.innerWidth <= 768) return; // ⛔ mobile
         const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
         hCard.innerHTML = `
           <div class="hover-header">
@@ -66,6 +78,7 @@ function renderTable(booksToDisplay) {
       });
 
       cell.addEventListener("mousemove", (e) => {
+        if (window.innerWidth <= 768) return;
         if (window.innerWidth <= 768 || hCard.style.display === "none") return;
         const cardWidth = 450;
         const margin = 20;
@@ -83,13 +96,22 @@ function renderTable(booksToDisplay) {
 
       cell.addEventListener("click", () => openModal(book, themeColor));
       table.appendChild(cell);
+      
     } else {
+      // Pour les cases vides après tes livres
       const empty = document.createElement("div");
       empty.className = "empty-cell";
       table.appendChild(empty);
     }
   }
 }
+
+// Optionnel : Relancer le calcul si l'utilisateur redimensionne sa fenêtre
+window.addEventListener('resize', () => {
+    // On repasse les livres actuels pour rafraîchir le nombre de cases vides
+    renderTable(allBooks); 
+});
+             
 
 // 3. LOGIQUE DE FILTRAGE
 function initFilterLogic() {
@@ -307,4 +329,32 @@ contactForm.addEventListener("submit", function(event) {
       submitBtn.innerText = "Send";
       submitBtn.disabled = false;
     });
+});
+// Sélection des éléments
+const keyBtn = document.querySelector(".pill-button"); // Ton bouton "KEY"
+const keyModal = document.getElementById("key-modal");
+const closeKey = document.getElementById("close-key");
+
+// Ouvrir la modal Key
+if (keyBtn) {
+  keyBtn.onclick = () => {
+    keyModal.classList.remove("hidden");
+    document.body.style.overflow = 'hidden'; // Bloque le scroll
+  };
+}
+
+// Fermer la modal Key
+if (closeKey) {
+  closeKey.onclick = () => {
+    keyModal.classList.add("hidden");
+    document.body.style.overflow = 'auto';
+  };
+}
+
+// Fermer si on clique à côté de la modal
+window.addEventListener("click", (e) => {
+  if (e.target === keyModal) {
+    keyModal.classList.add("hidden");
+    document.body.style.overflow = 'auto';
+  }
 });
