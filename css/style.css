@@ -6,28 +6,20 @@
 html, body {
   height: 100%;
 }
-
 body {
   margin: 0;
   background-color: #0b2a2e;
   color: #e6f2f3;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  /* 🔥 CLÉ DU FIX */
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
- 
-
 }
-
 .page-content {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
 }
-
-/* --- HEADER LAYOUT --- */
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -35,7 +27,6 @@ body {
   margin-bottom: 50px;
   padding-bottom: 20px;
 }
-
 .header-title .subtitle {
   font-family: 'Georgia', serif;
   font-style: italic;
@@ -43,7 +34,6 @@ body {
   margin: 0;
   color: #e6f2f3;
 }
-
 .header-title h1 {
   font-size: 2.2rem;
   margin: 0;
@@ -51,18 +41,14 @@ body {
   text-transform: uppercase;
 }
 
-/* --- BOUTONS STYLE PILL (GÉLULE) --- */
 .header-actions {
   display: flex;
   gap: 15px;
   align-items: center;
 }
-
 :root {
   --dynamic-color: #00d4ff; 
 }
-
-/* Style commun pour KEY et le conteneur FILTER */
 .pill-button, .filter-wrapper {
   position: relative; /* Crucial pour le menu flottant */
   background: transparent;
@@ -83,8 +69,6 @@ body {
   box-sizing: border-box;
   padding: 0 25px; /* Largeur interne pour KEY */
 }
-
-/* Effet Hover Néon */
 .pill-button:hover, 
 .filter-wrapper:hover {
   background: var(--dynamic-color) !important;
@@ -92,8 +76,6 @@ body {
   box-shadow: 0 0 25px var(--dynamic-color);
   text-shadow: none;
 }
-
-/* Le texte "FILTER:" à l'intérieur */
 .filter-display {
   display: flex;
   align-items: center;
@@ -101,30 +83,22 @@ body {
   white-space: nowrap;
     font-size: 0.8rem; /* Ajuste cette valeur (0.75rem ou 0.8rem) selon ton goût */
 }
-
 .filter-icon {
   display: inline-block; /* Indispensable pour que la rotation fonctionne */
   transition: transform 0.3s ease; /* Définit la vitesse et le style du mouvement */
   font-size: 0.9rem;
   color: inherit;
 }
-/* L'état quand le menu est ouvert */
 .filter-wrapper.active .filter-icon {
   transform: rotate(90deg); /* La flèche tourne vers le bas */
 }
 
-
-
-/* Supprime l'ancienne règle et mets celle-ci */
 .dropdown-box.show {
   display: block !important;
 }
-
-/* Optionnel : Assure-toi que le wrapper ne bloque pas les clics */
 .filter-wrapper {
   pointer-events: auto;
 }
-
 .dropdown-header {
   display: flex;
   justify-content: space-between;
@@ -133,57 +107,43 @@ body {
   color: white;
   padding-bottom: 10px;
 }
-
 .dropdown-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.2);
   margin: 0 -15px 15px -15px;
 }
-
 .dropdown-item .icon {
   font-size: 1.2rem;
   width: 20px;
 }
 
-/* Le conteneur qui va gérer le scroll horizontal sans toucher au reste */
-/* Zone de scroll du tableau */
 .table-scroll-area {
   flex: 1;                /* Prend tout l'espace libre au milieu */
   width: 100%;
   overflow-x: auto;       /* Permet de glisser à droite */
   overflow-y: hidden;     /* Pas de scroll haut/bas ici */
   padding: 20px 0;
-  
-  /* --- SUPPRIMER LA BARRE VISUELLE --- */
   scrollbar-width: none;  /* Pour Firefox */
   -ms-overflow-style: none;  /* Pour Edge/IE */
 }
-
-/* Pour Chrome, Safari et ton navigateur actuel */
 .table-scroll-area::-webkit-scrollbar {
   display: none;          /* La barre bleue disparaît totalement */
 }
-/* --- GRILLE PRINCIPALE --- */
 .table {
   display: grid;
-  grid-template-columns: repeat(12, 110px); /* 12 colonnes */
-  grid-template-rows: repeat(4, 140px);    /* 4 lignes fixes */
+  /* On fixe le nombre de colonnes pour garder l'aspect "Table Périodique" */
+  grid-template-columns: repeat(12, 110px); 
+  grid-auto-rows: 140px;    
   gap: 12px;
-  width: max-content; /* Force le tableau à être plus large que l'écran */
-  margin: 0;          /* Aligné à gauche pour commencer le scroll au début */
-  padding-bottom: 20px;
-  padding-left: 10px 
-;
+  width: max-content; /* Important pour que le scroll-area fonctionne */
+  margin: 0 auto;
+  padding: 20px;
 }
-
-.table:has(.cell:hover) .cell:not(:hover),
 .table:has(.cell:hover) .empty-cell {
   filter: blur(4px);
   opacity: 0.25;
   transform: scale(0.96);
 }
-
-/* --- CELLULE NORMALE --- */
 .cell {
   position: relative;
   width: 110px;
@@ -192,19 +152,17 @@ body {
   display: flex;
   flex-direction: column;
   padding: 10px 8px;
-  box-sizing: border-box;
+  background-color: #0b2a2e; /* Fond solide pour éviter la transparence sur le blur */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   z-index: 1;
 }
-
 .cell:hover {
   transform: scale(1.15);
   z-index: 1000;
   background: #0b2a2e;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-
 .number { font-size: 0.9rem; font-weight: 500; }
 .code {
   font-size: 2.4rem;
@@ -223,15 +181,30 @@ body {
   align-items: center;
   justify-content: center;
 }
-
-/* --- THÈMES --- */
 .algérie { color: #00bb06; }
 .nazisme { color: #f26d6d; }
 .islam { color: #00ff8c; }
-.Europe { color: #ff7c1f; }
+.europe { color: #ff7c1f; }
 .art { color: #ffff00; }
 .philosophie { color: #00bbff; }
-/* --- GRILLE FANTÔME (CELLULES VIDES) --- */
+.cell::after {
+  content: "";
+  position: absolute;
+  top: 12px;       /* Ajusté pour être bien aligné avec ton chiffre 5 */
+  right: 12px;
+  width: 8px;      /* Taille légèrement réduite */
+  height: 8px;
+  background-color: currentColor; 
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+.cell:hover::after {
+  transform: scale(1.1);
+  box-shadow: 0 0 5px currentColor; /* La lueur ne revient qu'un peu au survol */
+}
 .empty-cell {
   width: 110px;
   height: 140px;
@@ -241,8 +214,6 @@ body {
   position: relative;
   transition: all 0.3s ease;
 }
-
-/* Petit effet décoratif : une micro-croix au centre des cases vides */
 .empty-cell::after {
   content: "+";
   position: absolute;
@@ -252,13 +223,10 @@ body {
   color: rgba(230, 242, 243, 0.05); 
   font-size: 0.8rem;
 }
-
-/* Optionnel : La case s'illumine légèrement au survol */
 .empty-cell:hover {
   border-color: rgba(0, 212, 255, 0.3);
   background: rgba(0, 212, 255, 0.02);
 }
-/* --- MODAL (Structure Globale) --- */
 .modal {
   position: fixed;
   inset: 0;
@@ -270,7 +238,6 @@ body {
   z-index: 20000;
   cursor: pointer; /* Le curseur devient une main sur le fond sombre */
 }
-
 .modal-content {
   background: linear-gradient(135deg, rgba(30, 70, 75, 0.98), rgba(15, 40, 45, 0.98));
   width: 650px; /* Légèrement plus large pour l'aisance */
@@ -290,7 +257,6 @@ body {
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .modal-stats-info {
   display: flex;
   gap: 30px; /* Espace augmenté entre les deux blocs */
@@ -306,8 +272,6 @@ body {
   font-weight: 800;
   font-size: 0.9rem; /* Les titres restent légèrement plus petits pour le style */
 }
-
-/* Valeurs dynamiques (les chiffres) */
 #modal-pages-main, 
 #modal-year-main {
   color: white;
@@ -328,32 +292,35 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
 }
-
 .btn-buy-now:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
 }
 @media (max-width: 768px) {
-  .modal-content {
-    width: 95%;          /* Plus large sur mobile */
-    max-height: 90vh;    /* Ne dépasse pas de l'écran */
-    padding: 20px;
-    border-radius: 15px;
-    overflow-y: auto;    /* Scroll interne si le texte est long */
+  .modal {
+    align-items: flex-end;
   }
-  
+ .modal-content {
+    width: 100%;
+    height: 92vh;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    overflow-y: auto;
+  }
+   .modal-body {
+    flex-direction: column;
+  }
   #modal-image {
-    width: 100%;         /* L'image s'adapte à la largeur du téléphone */
+    width: 100%;         
     height: auto;
   }
-  @media (min-width: 769px) {
-  .modal-content {
-    width: 500px;        /* Taille fixe sur PC */
-    padding: 40px;
-    border-radius: 10px;
+   #modal-img-main {
+    max-width: 180px;
   }
 }
-}
+
+
+
 #close-modal {
   position: absolute;
   top: 20px;
@@ -383,7 +350,6 @@ body {
   align-items: flex-start; 
 }
 
-/* --- COLONNE GAUCHE (Image + More Details) --- */
 .modal-left { 
   width: 250px; 
   flex-shrink: 0;
@@ -398,7 +364,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-
 .btn-more-details {
   display: block;
   text-align: center;
@@ -412,14 +377,12 @@ body {
   transition: all 0.3s ease;
 }
 
-/* --- COLONNE DROITE (Infos + Actions) --- */
 .modal-right {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-/* Alignement Titre + Badge */
 .modal-header-row {
   display: flex;
   align-items: center;
@@ -428,30 +391,32 @@ body {
 }
 
 #modal-title-main {
-  display: inline;          /* Permet au badge de monter à côté */
-  font-size: 1,5rem;
+  display: inline;          
+  font-size: 1.5rem;
   margin: 0;
-text-transform: uppercase; /* Optionnel : pour mettre tout en majuscules */
-padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la place au X */
-  line-height: 1,2;         /* Optionnel : ajuste l'espacement entre les lignes du titre */
+text-transform: uppercase;
+padding-right: 50px;     
+  line-height: 1.2;        
 }
-
-
 #modal-badge-main {
   display: inline-block;
   width: fit-content;
-  padding: 08px 15px;       /* Un peu plus généreux pour remplir l'espace */
+  padding: 8px 15px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: white;
-  
-  /* C'est ce qui le pousse tout à droite à la place du bouton */
-  margin-left: auto; 
-  
+  margin-left: auto;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+
+  text-shadow: 
+    -0.5px -0.5px 0 #000, 
+     0.5px -0.5px 0 #000, 
+    -0.5px  0.5px 0 #000, 
+     0.5px  0.5px 0 #000;
 }
 #modal-author-main { 
   font-size: 1.1rem;
@@ -459,25 +424,22 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   margin-bottom: 30px; 
 }
 
-/* Ligne d'action (Note + Bouton Acheter) */
-/* Ligne d'action (Note + Badge à droite) */
 .modal-rating-row {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pousse le rating à gauche et le badge à droite */
+  justify-content: space-between; 
   width: 100%;
   padding: 12px 15px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   margin-bottom: 20px;
-  box-sizing: border-box; /* Assure que le padding ne fait pas déborder la boîte */
+  box-sizing: border-box; /
 }
 
 #modal-badge-main {
-  /* On retire le margin-left: auto car le justify-content fait déjà le travail */
   margin-left: 10px; 
-  white-space: nowrap; /* Empêche le nom du thème de revenir à la ligne */
-  flex-shrink: 0; /* Empêche le badge de s'écraser si le titre est long */
+  white-space: nowrap; 
+  flex-shrink: 0; 
   font-size: 0.75rem;
   padding: 6px 12px;
 }
@@ -488,26 +450,23 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   color: #ffcc00; 
   line-height: 1; 
 }
-
 .stars { color: #ffcc00; font-size: 1.1rem; }
 .modal-description {
   font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 30px; /* Espace avant la grille de stats */
-  max-height: 150px;    /* Limite la hauteur si le texte est trop long */
-  overflow-y: auto;     /* Ajoute une petite barre de défilement si besoin */
+  margin-bottom: 30px; 
+  max-height: 150px;    
+  overflow-y: auto;     
   padding-right: 10px;
-/* 🔥 AJOUTE CECI POUR CACHER LA BARRE DE SCROLL */
-  scrollbar-width: none;       /* Pour Firefox */
-  -ms-overflow-style: none;    /* Pour Internet Explorer et Edge */
+
+  scrollbar-width: none;     
+  -ms-overflow-style: none;    
 }
 
-/* 🔥 ET CECI POUR CHROME, SAFARI ET OPERA */
 .modal-description::-webkit-scrollbar {
   display: none;
 }
-/* Supprime ou commente .btn-buy-book car tu ne l'utilises plus ici */
 .btn-buy-book { display: none; }
 
 .btn-buy-book:hover {
@@ -515,7 +474,6 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   transform: translateY(-2px);
 }
 
-/* Grille de stats en bas */
 .modal-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -523,7 +481,6 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   padding-top: 25px;
   gap: 20px;
 }
-/* --- HOVER CARD (EFFET POP-OUT) --- */
 .hover-card {
   position: fixed;
   width: 450px;
@@ -538,11 +495,9 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   flex-direction: column;
   color: white;
   transition: opacity 0.2s ease-out;
-  
-  /* Permet à l'image de dépasser des bords */
   overflow: visible; 
-  will-change: left, top; /* Optimise la fluidité du mouvement */
-  transition: opacity 0.2s ease-out; /* On ne met pas de transition sur left/top sinon ça "traîne" */
+  will-change: left, top; 
+  transition: opacity 0.2s ease-out;
 }
 
 .hover-header { 
@@ -551,25 +506,20 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   align-items: flex-start;
   gap: 15px; 
   margin-bottom: 12px;
-  /* On crée de l'espace en haut pour compenser l'image qui monte */
   padding-top: 20px; 
 }
-
 .hover-score { font-size: 2.8rem; font-weight: 800; color: #ffcc00; line-height: 1; }
-
 .hover-image-container img { 
   width: 200px; 
   height: 310px; 
   object-fit: cover; 
   border-radius: 8px;
-  
-  /* C'EST CETTE LIGNE ICI : */
-  margin-top: -120px;  /* Plus le chiffre est élevé (ex: -90px), plus l'image monte */
+  margin-top: -120px; 
   box-shadow: 0 15px 30px rgba(0,0,0,0.8);
   border: 1px solid rgba(255,255,255,0.2);
 }
 .hover-description-box {
-  font-size: 1,60rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: rgba(230, 242, 243, 0.9);
   margin-bottom: 15px;
@@ -578,52 +528,51 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .hover-book-title {
   font-size: 1.2rem;
   font-weight: 700;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 12px;
   margin-bottom: 10px;
+  color: white;
+  text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
 }
-
 .hover-footer-row { display: flex; justify-content: space-between; align-items: center; }
 .hover-author { font-size: 0.9rem; opacity: 0.8; margin: 0; }
 .hover-badge { 
-  font-size: 0,90rem;      /* Augmente la taille du texte (était 0.7rem) */
-  padding: 8px 16px;       /* Augmente l'épaisseur et la largeur du badge */
+  font-size: 0.90rem; 
+  padding: 8px 16px; 
   border-radius: 20px; 
   font-weight: bold;
-  text-transform: uppercase; /* Optionnel : met en majuscules pour un look plus "badge" */
-  letter-spacing: 0.5px;    /* Optionnel : espace un peu les lettres */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  text-shadow: 
+    -0.5px -0.5px 0 #000, 
+     0.5px -0.5px 0 #000, 
+    -0.5px  0.5px 0 #000, 
+     0.5px  0.5px 0 #000;
 }
 .hidden { display: none !important; }
-/* Décale le bloc Note et Étoiles vers la droite */
 .hover-rating-section {
-  margin-left: 20px; /* Augmente ce chiffre (ex: 80px) pour décaler encore plus */
+  margin-left: 20px; 
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Espace entre le score et les étoiles */
+  gap: 5px; 
 }
 .hover-rating-label {
-  font-size: 01,9rem;          /* Petit pour l'élégance */
+  font-size: 1.2rem;        
   text-transform: uppercase;
-  color: rgb(255, 255, 255); /* Blanc semi-transparent */
+  color: rgb(255, 255, 255); 
   font-weight: 700;
-  letter-spacing: 2px;        /* Plus d'espace entre les lettres pour le look "label" */
-  margin-top: -2px;           /* On le remonte légèrement vers les étoiles */
+  letter-spacing: 2px;        
+  margin-top: -2px;           
   display: block;
   text-align: center;
 }
-
-/* Optionnel : Une lueur très légère pour rappeler le thème */
 .hover-rating-label {
   text-shadow: 0 0 5px rgb(255, 83, 83);
 }
-/* Container de la ligne */
-/* --- SECTION RATINGS CORRIGÉE --- */
-
-/* 1. La ligne (le conteneur) */
 .rating-item {
   display: flex;
   justify-content: space-between;
@@ -635,31 +584,23 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   cursor: pointer;
   margin-bottom: 4px;
 }
-
-/* 2. Effet au survol de la ligne */
 .rating-item:hover {
-  background: rgba(255, 204, 0, 0.503); /* Fond doré translucide */
+  background: rgba(255, 204, 0, 0.503); 
   border-color: rgba(255, 204, 0, 0.3);
-  transform: translateX(8px); /* Décalage fluide vers la droite */
+  transform: translateX(8px); 
 }
-
-/* 3. Animation des étoiles SVG au survol */
 .rating-item:hover .stars-display svg {
   filter: drop-shadow(0 0 8px var(--gold));
   transform: scale(1.1);
 }
-
-/* 4. État quand la checkbox est cochée (Ligne entière) */
 .rating-item:has(.rating-check:checked) {
   background: rgba(255, 204, 0, 0.15);
   border-color: var(--gold);
 }
-
-/* 5. Style des étoiles SVG par défaut */
 .stars-display {
   display: flex;
   gap: 4px;
-  pointer-events: none; /* Évite que les étoiles bloquent le clic sur le label */
+  pointer-events: none; 
 }
 
 .stars-display svg {
@@ -667,7 +608,6 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   color: var(--gold); /* Couleur pour les contours (stroke) */
 }
 
-/* 6. La Checkbox Custom (Checkmark) */
 .checkmark {
   display: inline-block;
   width: 20px;
@@ -679,7 +619,6 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   transition: all 0.2s ease;
 }
 
-/* Masquer la checkbox native */
 .rating-check {
   position: absolute;
   opacity: 0;
@@ -688,65 +627,28 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   cursor: pointer;
   z-index: 2;
 }
-
-/* Remplissage de la case quand coché */
 .rating-check:checked ~ .checkmark {
   background-color: var(--gold);
 }
-
-/* Le petit "V" à l'intérieur */
 .rating-check:checked ~ .checkmark::after {
   content: "✓";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #0b2a2e; /* Couleur sombre du fond pour le contraste */
+  color: #0b2a2e; 
   font-weight: 900;
   font-size: 14px;
 }
-@media (max-width: 768px) {
-  .hover-card {
-    /* LA PHRASE CLÉ : position fixed par rapport à la vitre du téléphone */
-    position: fixed !important; 
-    
-    /* PLACEMENT : 50% du haut et de la gauche de l'écran visible */
-    top: 20% !important;
-    left: 50% !important;
-    
-    
-    /* CENTRAGE PARFAIT : on décale la carte de sa propre moitié */
-    transform: translate(-50%, -50%) !important;
 
-    /* REGLAGES VISUELS */
-    width: 90% !important;
-    max-height: 80vh;
-    overflow-y: auto; /* Permet de lire si le texte est long */
-    pointer-events: auto !important; /* Permet de cliquer/scroller dessus */
-    z-index: 99999 !important;
-    opacity: 1 !important;
-    display: flex;
-  }
-
-  /* On redresse l'image pour qu'elle ne dépasse pas sur mobile */
-  .hover-image-container img {
-    margin-top: 0 !important;
-    max-height: 200px;
-    width: auto;
-    margin-bottom: 15px;
-  }
-}
-/* --- LE BOUTON FILTER (Version Fusionnée) --- */
 .filter-wrapper {
-  position: relative;        /* Crucial pour l'ancrage de la boîte de menu */
-  display: inline-flex;      /* Aligne le texte et l'icône proprement */
+  position: relative;       
+  display: inline-flex;      
   align-items: center;
   justify-content: center;
-  min-width: 150px;          /* Largeur stable pour ne pas bouger au clic */
+  min-width: 150px;         
   height: 42px;
   cursor: pointer;
-  
-  /* On reprend ici les styles de ta gélule (Pill) */
   background: transparent;
   border: 2px solid var(--dynamic-color);
   color: var(--dynamic-color);
@@ -759,70 +661,51 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 }
-
-/* Effet Hover (Néon) */
 .filter-wrapper:hover {
   background: var(--dynamic-color) !important;
   color: #0b2a2e !important;
   box-shadow: 0 0 25px var(--dynamic-color);
   text-shadow: none;
 }
-
-/* Masquer le select d'origine s'il existe encore */
 #filter-select { display: none; }
-
-/* LA BOÎTE FLOTTANTE (Ton image 1) */
 .dropdown-box {
   display: none; 
   position: absolute;
-  top: 50px; /* Ajuste selon la hauteur de ton bouton */
+  top: 50px; 
   right: 0;
   width: 300px;
-  
-  /* --- EFFET TRANSPARENCE --- */
-  background: rgba(29, 186, 210, 0.75); /* Couleur de ton site (0b2a2e) mais en mode transparent (0.75) */
-  backdrop-filter: blur(12px);       /* Le flou derrière la boîte (effet verre dépoli) */
-  -webkit-backdrop-filter: blur(12px); /* Support pour Safari */
-  
-  /* --- BORDURE ET LUEUR --- */
-  border: 1px solid rgb(255, 255, 255); /* Bordure très fine de la couleur de ton thème */
+  background: rgba(29, 186, 210, 0.75); 
+  backdrop-filter: blur(12px);       
+  -webkit-backdrop-filter: blur(12px); 
+  border: 1px solid rgb(255, 255, 255); 
   border-radius: 20px;
   padding: 20px;
   z-index: 100000; 
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   cursor: default;
 }
-
-
-
-
 .dropdown-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
-  margin: 0 -20px 20px -20px; /* On pousse les bords à fond */
+  margin: 0 -20px 20px -20px; 
 }
-
 .dropdown-item {
   display: flex;
   align-items: center;
   gap: 15px;
   padding: 12px 10px;
-  border-radius: 12px; /* Plus arrondi pour les lignes */
+  border-radius: 12px; 
   transition: all 0.3s ease;
   color: white;
   cursor: pointer;
   font-weight: 500;
 }
-
-/* On enlève l'effet néon au survol de la ligne */
 .dropdown-item:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ffffff !important; /* Garde le texte blanc même au hover */
+  color: #ffffff !important; 
 }
-
-/* AJOUTE CECI pour créer le petit carré autour de l'icône */
 .dropdown-item .icon {
-  background: rgba(255, 255, 255, 0.1); /* Fond légèrement blanc */
+  background: rgba(255, 255, 255, 0.1); 
   width: 34px;
   height: 34px;
   display: flex;
@@ -867,60 +750,34 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
 .cat-item span:first-child {
   font-weight: 600;
   text-transform: uppercase;
-  transition: text-shadow 0.3s ease, color 0.3s ease;
+  --outline: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+  transition: text-shadow 0.3s ease;
 }
 
 /* Nazisme */
-.cat-item.nazisme span:first-child {
-  color: #f26d6d;
-  text-shadow: 0 0 4px #f26d6d;
-}
-.cat-item.nazisme:hover span:first-child {
-  text-shadow: 0 0 10px #f26d6d, 0 0 20px #f26d6d, 0 0 30px #f26d6d;
-}
+.cat-item.nazisme span:first-child { color: #f26d6d; text-shadow: var(--outline), 0 0 3px #f26d6d; }
+.cat-item.nazisme:hover span:first-child { text-shadow: var(--outline), 0 0 12px #f26d6d; }
 
 /* Algérie */
-.cat-item.algérie span:first-child {
-  color: #00bb06;
-  text-shadow: 0 0 4px #00bb06;
-}
-.cat-item.algérie:hover span:first-child {
-  text-shadow: 0 0 10px #00bb06, 0 0 20px #00bb06, 0 0 30px #00bb06;
-}
+.cat-item.algérie span:first-child { color: #00bb06; text-shadow: var(--outline), 0 0 3px #00bb06; }
+.cat-item.algérie:hover span:first-child { text-shadow: var(--outline), 0 0 12px #00bb06; }
 
 /* Islam */
-.cat-item.islam span:first-child {
-  color: #00ff8c;
-  text-shadow: 0 0 4px #00ff8c;
-}
-.cat-item.islam:hover span:first-child {
-  text-shadow: 0 0 10px #00ff8c, 0 0 20px #00ff8c, 0 0 30px #00ff8c;
-}
+.cat-item.islam span:first-child { color: #00ff8c; text-shadow: var(--outline), 0 0 3px #00ff8c; }
+.cat-item.islam:hover span:first-child { text-shadow: var(--outline), 0 0 12px #00ff8c; }
+
 /* Philosophie */
-.cat-item.philosophie span:first-child {
-  color: #00e5ff;
-  text-shadow: 0 0 4px #00e5ff;
-}
-.cat-item.philosophie:hover span:first-child {
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
-}
+.cat-item.philosophie span:first-child { color: #00e5ff; text-shadow: var(--outline), 0 0 3px #00e5ff; }
+.cat-item.philosophie:hover span:first-child { text-shadow: var(--outline), 0 0 12px #00e5ff; }
 
 /* Art */
-.cat-item.art span:first-child {
-  color: #ffff00;
-  text-shadow: 0 0 4px #ffff00;
-}
-.cat-item.art:hover span:first-child {
-  text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00;
-}
+.cat-item.art span:first-child { color: #ffff00; text-shadow: var(--outline), 0 0 3px #ffff00; }
+.cat-item.art:hover span:first-child { text-shadow: var(--outline), 0 0 12px #ffff00; }
+
 /* Europe */
-.cat-item.europe span:first-child {
-  color: #ff7c1f;
-  text-shadow: 0 0 4px #ff7c1f;
-}
-.cat-item.europe:hover span:first-child {
-  text-shadow: 0 0 10px #ff7c1f, 0 0 20px #ff7c1f, 0 0 30px #ff7c1f;
-}
+.cat-item.europe span:first-child { color: #ff7c1f; text-shadow: var(--outline), 0 0 3px #ff7c1f; }
+.cat-item.europe:hover span:first-child { text-shadow: var(--outline), 0 0 12px #ff7c1f; }
+
 .cat-item input {
   display: none;
 }
@@ -1042,3 +899,451 @@ padding-right: 50px;      /* 🔥 Crée un espace vide à droite pour laisser la
   cursor: pointer;
   font-size: 1.4rem;
 }
+/* --- LE FOND DE LA MODAL (Version Ultra-Transparente) --- */
+.key-modal-content {
+  /* On baisse l'opacité à 0.15 ou 0.2 pour un effet presque invisible */
+  background: rgba(101, 237, 255, 0.087); 
+  
+  /* On augmente le flou pour que le contenu derrière reste lisible sans masquer le design */
+  backdrop-filter: blur(30px) saturate(150%);       
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  
+  padding: 60px 40px;
+  border-radius: 30px;
+  
+  /* On garde une bordure fine pour définir les contours de la vitre */
+  border: 1px solid rgb(255, 255, 255);
+  
+  width: 90%;
+  max-width: 900px;
+  position: relative;
+  
+  /* Une ombre plus diffuse pour l'impression de lévitation */
+  box-shadow: 0 40px 100px #4dacff38;
+  color: rgb(255, 253, 253);
+}
+
+/* --- LE BOUTON FERMER (X) --- */
+#close-key {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 45px;
+  height: 45px;
+  border: 2px solid #00e5ff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00e5ff;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+#close-key:hover {
+  background: #00e5ff;
+  color: #0b2a2e;
+  box-shadow: 0 0 25px #00e5ff;
+}
+
+/* --- CARTE CENTRALE (PREVIEW) - VERSION COMPACTE --- */
+.key-preview-card {
+  /* On réduit la taille globale */
+  width: 200px; 
+  height: 260px;
+  
+  /* Centrage avec une marge basse plus raisonnable */
+  margin: 0 auto 30px; 
+  
+  background: rgba(255, 255, 255, 0.03); /* Très léger fond pour la structure */
+  border: 1.5px solid rgba(0, 229, 255, 0.5); /* Bordure plus fine */
+  border-radius: 12px;
+  
+  /* Flexbox pour éviter que le texte se mélange */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  padding: 15px;
+  position: relative;
+  
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+/* On ajuste les textes du haut (Page # / Category) */
+.preview-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.5;
+}
+
+/* LE SYMBOLE : On réduit la taille et on enlève la grosse marge */
+.preview-symbol {
+  font-size: 2.8rem; /* Plus petit (était 4rem) */
+  font-weight: 700;
+  text-align: center;
+  flex-grow: 1; /* Prend l'espace disponible au centre sans pousser le reste */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+/* LE TITRE EN BAS */
+.preview-title {
+  font-size: 0.8rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 10px;
+  opacity: 0.8;
+}
+
+/* --- GRILLE DES BADGES (KEY ITEMS) --- */
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px; /* On réduit l'espace entre les badges */
+  max-width: 600px; /* On limite la largeur totale de la grille */
+  margin: 0 auto;
+}
+
+.key-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px; /* Plus compact */
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.key-item:hover {
+  transform: scale(1.05);
+}
+
+/* Effet de lueur interne sur les badges */
+.key-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.key-number {
+ font-size: 1.5rem; /* Réduit (était 2.2rem) */
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.key-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* --- COULEURS NÉON --- */
+.key-algérie { 
+    background: rgba(0, 187, 6, 0.928); 
+    box-shadow: 0 0 20px rgba(0, 187, 6, 0.4); 
+    border-color: #00ff08;
+}
+.key-nazisme { 
+    background: rgba(255, 0, 0, 0.88); 
+    box-shadow: 0 0 20px rgba(255, 45, 45, 0.4);
+    border-color: #ff5e5e;
+}
+.key-islam { 
+    background: rgba(0, 255, 140, 0.834); 
+    box-shadow: 0 0 20px rgba(0, 255, 140, 0.4);
+    border-color: #5effb6;
+}
+.key-europe { 
+    background: rgb(255, 124, 31); 
+    box-shadow: 0 0 20px rgba(255, 124, 31, 0.4);
+    border-color: #ff6a00;
+}
+.key-art { 
+    background: rgba(255, 255, 0, 0.871); 
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.618);
+    border-color: #ffff80;
+    color: #0b2a2e; /* Texte sombre pour le jaune */
+}
+.key-philosophie { 
+    background: rgba(0, 229, 255, 0.841); 
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+    border-color: #80f3ff;
+}
+/* ============================================================
+   VERSION MOBILE (UNIQUE ET NETTOYÉE)
+   ============================================================ */
+@media (max-width: 768px) {
+  
+  /* --- STRUCTURE GLOBALE --- */
+  .page-content {
+    padding: 10px !important;
+  }
+
+  .main-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* --- GRILLE : CORRECTION DES TAILLES INÉGALES --- */
+  .table-scroll-area {
+    overflow-x: hidden !important; /* Plus de scroll horizontal sur mobile */
+    padding: 10px 0 !important;
+  }
+
+  .table {
+    display: grid !important;
+    /* On force 3 colonnes strictement identiques */
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important; 
+    /* On force chaque ligne à la même hauteur */
+    grid-auto-rows: 135px !important; 
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 5px !important;
+    margin: 0 !important;
+  }
+
+  /* --- CARTES (LOOK PC ADAPTÉ) --- */
+  .cell {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 8px 4px !important;
+    border-width: 2px !important;
+    border-radius: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    transform: none !important; /* Empêche les bugs de zoom tactile */
+  }
+
+  .code {
+    font-size: 1.4rem !important;
+    margin: 0 !important;
+  }
+
+  .title {
+    font-size: 0.55rem !important;
+    line-height: 1.1 !important;
+    min-height: 32px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* --- INTERFACE : BOUTONS & MODALES --- */
+  .header-actions {
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 0 5px !important;
+  }
+
+  .pill-button, .filter-wrapper {
+    flex: 1 !important;
+    height: 40px !important;
+    font-size: 0.75rem !important;
+    padding: 0 !important;
+  }
+.modal:has(.contact-modal) {
+    align-items: center !important; /* Centre la box verticalement */
+    padding: 20px !important;
+  }
+  /* MODALE CONTACT (Version application compacte) */
+ .contact-modal {
+    width: 95% !important; /* Presque toute la largeur */
+    max-width: 340px !important; /* Mais reste compacte pour le look App */
+    background: linear-gradient(145deg, #163a3f, #0b2a2e) !important;
+    border: 2px solid var(--dynamic-color) !important;
+    border-radius: 20px !important; /* Coins très arrondis */
+    padding: 25px 20px !important;
+    position: relative !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
+    animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+.contact-modal h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 20px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--dynamic-color);
+  }
+
+.contact-form {
+    gap: 12px !important;
+  }
+.contact-form textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important; /* Look arrondi moderne */
+    padding: 12px !important;
+    font-size: 0.9rem !important;
+    color: white !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--dynamic-color) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* --- BOUTON ENVOYER (MODALE CONTACT) --- */
+  .contact-form button {
+    width: 100% !important; /* Prend toute la largeur de la box */
+    height: 48px !important; /* Un peu plus haut pour un meilleur confort tactile */
+    margin-top: 15px !important;
+    background: var(--dynamic-color) !important;
+    color: #0b2a2e !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Effet actif au toucher pour simuler une "vraie" app */
+  .contact-form button:active {
+    transform: scale(0.98) !important;
+    filter: brightness(0.9) !important;
+  }
+  /* 6. Bouton de fermeture (X) */
+  .close-modal {
+    top: 10px !important;
+    right: 15px !important;
+    font-size: 1.5rem !important;
+    opacity: 0.7;
+  }
+  /* --- CENTRAGE MODALE KEY (CORRIGÉ) --- */
+  
+  /* On ne touche pas au conteneur .modal global pour éviter de casser le JS */
+  /* On agit directement sur le contenu de la modale KEY */
+  .key-modal-content {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Centrage mathématique parfait */
+    
+    width: 90% !important;
+    max-width: 350px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    
+    margin: 0 !important;
+    z-index: 20001 !important;
+  }
+  .modal:has(.key-modal-content) {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .modal.hidden {
+    display: none !important;
+  }
+  #close-key {
+    width: 35px !important;
+    height: 35px !important;
+    top: 15px !important;
+    left: 15px !important;
+    font-size: 18px !important;
+    border-radius: 8px !important;
+  }
+  .key-preview-card {
+    width: 160px !important; /* Plus petite sur mobile */
+    height: 210px !important;
+    margin-bottom: 25px !important;
+  }
+  .preview-symbol {
+    font-size: 2.2rem !important;
+  }
+  .key-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 badges par ligne */
+    gap: 10px !important;
+    max-width: 100% !important;
+  }
+
+  .key-item {
+    padding: 12px 10px !important;
+    border-radius: 12px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .key-number {
+    font-size: 1.2rem !important; /* Chiffre plus lisible */
+    margin-bottom: 3px !important;
+  }
+
+  .key-label {
+    font-size: 0.75rem !important; /* Texte compact */
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Optionnel : Si tu veux que l'item "Philosophie" ne soit pas coupé s'il est long */
+  .key-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+}
+
+/* Animation d'apparition légère */
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* --- HARMONISATION DU BOUTON CONTACT US --- */
+  .main-footer {
+    padding: 15px !important;
+    display: flex !important;
+    justify-content: flex-start !important; /* Force l'alignement à gauche */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .footer-pill {
+    /* Même taille que le bouton KEY */
+    height: 40px !important; 
+    flex: 1 !important; 
+    max-width: 120px !important; /* On limite sa largeur pour ne pas qu'il traverse l'écran */
+    
+    /* Même style de texte que KEY */
+    font-size: 0.75rem !important;
+    padding: 0 15px !important;
+    border-width: 2px !important; /* On remet l'épaisseur de KEY */
+    
+    /* Alignement et position */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important; /* Pas de centrage, reste à gauche */
+    text-align: center;
+  }
+
+  /* Pour éviter que le copyright (s'il existe) ne le pousse */
+  .main-footer span {
+    display: none; /* Cache le texte "Copyright" sur mobile pour laisser la place au bouton */
+  }
+
+
