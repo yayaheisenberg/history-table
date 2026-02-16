@@ -1305,7 +1305,19 @@ padding-right: 50px;
     text-overflow: ellipsis;
     width: 100%;
   }
-
+#btn-buy-book {
+  width: 100% !important;
+  height: 45px !important;
+  display: inline-flex !important; /* Pour contrer le display:none si besoin */
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #ff9900 !important; /* Couleur Amazon Orange */
+  color: #000 !important;
+  font-weight: 800 !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  margin-top: 15px !important;
+}
 }
 
 /* Animation d'apparition légère */
