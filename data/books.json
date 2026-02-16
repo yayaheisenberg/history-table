@@ -1,6 +1,6 @@
 [
   {
-    "number": 1,
+    "number": 576,
     "code": "Lg",
     "title": "Les généraux allemands parlent",
     "author": "Basil H. Liddell Hart",
@@ -9,10 +9,11 @@
     "image": "images/bb.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/cDJPp2exJAg?si=fuGCNb_uCdnJZmrL",
-    "pages": 576
+    "pages": 576,
+    "year" : 1951
   },
   {
-    "number": 2,
+    "number": 429,
     "code": "Isl",
     "title": "Islam autoritarisme et sous-développement",
     "author": "Ahmet.T.Kuru",
@@ -21,10 +22,11 @@
     "image": "images/islam et autoritarisme.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/CuYz2j5KhHU?si=qKocqYWNA2Nvnnxs",
-    "pages": 429
+    "pages": 429,
+    "year": 2024
   },
   {
-    "number": 3,
+    "number": 288,
     "code": "jui",
     "title": "Juifs et musulmans en Algérie VIIe-XXe siècle",
     "author": "Lucette Valensi",
@@ -33,10 +35,11 @@
     "image": "images/juifs et musulmans.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/OZTDRhcVNqk?si=CCT9m1Kk2Tzy5Ghv",
-    "pages": 288
+    "pages": 288,
+    "year": 2023
   },
   {
-    "number": 4,
+    "number": 416,
     "code": "Pal",
     "title": "Palettes",
     "author": "Alain Jaubert",
@@ -45,22 +48,24 @@
     "image": "images/palettes.jpg",
     "rating": 3,
     "youtube": "https://youtu.be/rvC8PolsB2E?si=ewx-BU8k0d2wixve",
-    "pages": 416
+    "pages": 416,
+    "year": 2017
   },
   {
-    "number": 5,
+    "number": 112,
     "code": "Civ",
     "title": "La civilisation judéo-chrétienne",
     "author": "Sophie Bessis",
     "description": "Depuis quarante ans, le concept de « civilisation judéo-chrétienne » domine les discours politiques et médiatiques en Occident, présenté comme le socle culturel de l’Europe et de l’Amérique du Nord. Mais que cache cette expression devenue une référence hégémonique ?",
-    "theme": "Europe",
+    "theme": "europe",
     "image": "images/juif et muslim.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/EGy_YAE7Hco?si=TUt9Ir05Qo5zpo03",
-    "pages": 112
+    "pages": 112,
+    "year": 2025
   },
   {
-    "number": 6,
+    "number": 543,
     "code": "Nec",
     "title": "Le nectar cacheté",
     "author": "Safiyyu ar-Rahmân Al-Mubârakfûrî",
@@ -69,10 +74,12 @@
     "image": "images/nectar.jpg",
     "rating": 5,
     "youtube": "https://youtu.be/8OjP6y0fPJM?si=hHFzbqRb6hGbsHKq",
-    "pages": 543
+    "abuyLink": "https://www.amazon.fr/dp/B00INN6T4C/ref=cm_sw_r_as_gl_apa_gl_i_1KDW9CHSM7776B40BNAT?linkCode=ml1&tag=templedulivre-21&linkId=0f9f77da166b6a4f86bfc14e4a82051e",
+    "pages": 543,
+    "year": 1976
   },
    {
-    "number": 7,
+    "number": 120,
     "code": "Sag",
     "title": "Sagesses sublimes",
     "author": "Ibn Arabi",
@@ -81,10 +88,11 @@
     "image": "images/farabi.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/EQC2KKiqjDE?si=oOqzf-7fpMfGvPjZ",
-    "pages": 120
+    "pages": 120,
+    "year": 2022
   }, 
   {
-    "number": 8,
+    "number": 504,
     "code": "Sir",
     "title": "Sira",
     "author": "Ibn Ishaq",
@@ -93,10 +101,11 @@
     "image": "images/ibn ishak.jpg",
     "rating": 3,
     "youtube": "https://youtu.be/HDO3DfR3ZGE?si=z451_ave-VpyHloR",
-    "pages": 504
+    "pages": 504,
+    "year": 2023
   },
     {
-    "number": 9,
+    "number": 462,
     "code": "Cor",
     "title": "L'histoire du texte du Coran",
     "author": "Muhhamad M.Al-Azami",
@@ -105,10 +114,11 @@
     "image": "images/coran.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/7xec4htySZg?si=p-HoXyapMVSGaGii",
-    "pages": 462
+    "pages": 462,
+    "year": 2024
   },
     {
-    "number": 10,
+    "number": 114,
     "code": "Cre",
     "title": "La sagesse dans la création",
     "author": "Al-Ghazali",
@@ -117,7 +127,8 @@
     "image": "images/ghazali.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/Sgcmqtdgtlk?si=Tu0mZn_tN6TQmSDb",
-    "pages": 114
+    "pages": 114,
+    "year": 2022
   }
 ]
 
