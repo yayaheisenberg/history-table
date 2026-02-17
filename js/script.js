@@ -2,6 +2,7 @@ const table = document.querySelector(".table");
 let allBooks = [];
 let originalBooks = [];
 let isAlphaSorted = false;
+let currentDisplayedBooks = [];
 const hCard = document.createElement("div");
 hCard.className = "hover-card";
 hCard.style.display = "none";
@@ -78,16 +79,20 @@ function renderTable(booksToDisplay) {
       });
 
       cell.addEventListener("mousemove", (e) => {
-        if (window.innerWidth <= 768) return;
-        if (window.innerWidth <= 768 || hCard.style.display === "none") return;
-        const cardWidth = 450;
-        const margin = 20;
-        let left = e.clientX > window.innerWidth / 2 ? e.clientX - cardWidth - margin : e.clientX + margin;
-        let top = e.clientY - 40;
-        hCard.style.left = `${left}px`;
-        hCard.style.top = `${top}px`;
-        hCard.style.opacity = "1";
-      });
+  if (window.innerWidth <= 768 || hCard.style.display === "none") return;
+
+  const cardWidth = 450;
+  const margin = 20;
+
+  const left = e.clientX > window.innerWidth / 2
+    ? e.clientX - cardWidth - margin
+    : e.clientX + margin;
+
+  hCard.style.left = `${left}px`;
+  hCard.style.top = `${e.clientY - 40}px`;
+  hCard.style.opacity = "1";
+});
+
 
       cell.addEventListener("mouseleave", () => {
         hCard.style.display = "none";
@@ -105,12 +110,13 @@ function renderTable(booksToDisplay) {
     }
   }
 }
-
-// Optionnel : Relancer le calcul si l'utilisateur redimensionne sa fenêtre
+let lastWidth = window.innerWidth;
 window.addEventListener('resize', () => {
-    // On repasse les livres actuels pour rafraîchir le nombre de cases vides
-    renderTable(allBooks); 
-});
+  if (window.innerWidth !== lastWidth) {
+    lastWidth = window.innerWidth;
+    renderTable(currentDisplayedBooks);
+  }
+})
              
 
 // 3. LOGIQUE DE FILTRAGE
@@ -124,7 +130,8 @@ function initFilterLogic() {
   const alphaBtn = document.querySelector('[data-value="alpha"]');
   const openCatBtn = document.querySelector('[data-value="open-categories"]');
   const openRatingBtn = document.querySelector('[data-value="rating"]');
-  
+   const dropdownBox = filterWrapper.querySelector(".dropdown-box");
+
   const backBtn = document.getElementById('back-to-main');
   const backToMainRating = document.getElementById('back-to-main-rating');
   
@@ -148,14 +155,14 @@ if (categoryPanel) {
     e.stopPropagation();
   };
 }
+function closeFilter() {
+  filterWrapper.classList.remove("active");
+  dropdownBox.classList.remove("show");
+  mainPanel.classList.remove("show");
+  categoryPanel.classList.remove("show");
+  if (ratingPanel) ratingPanel.classList.remove("show");
+}
 
-  // FONCTION FERMER TOUS LES MENUS
-  function closeFilter() {
-    filterWrapper.classList.remove("active");
-    mainPanel.classList.remove("show");
-    categoryPanel.classList.remove("show");
-    if (ratingPanel) ratingPanel.classList.remove("show");
-  }
 
   // FONCTION DE FILTRAGE GLOBALE
   function applyAllFilters() {
@@ -175,16 +182,20 @@ if (categoryPanel) {
     renderTable(filtered);
     closeFilter();
   }
+filterDisplay.onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
 
-  // ÉVÉNEMENTS D'OUVERTURE
-  filterDisplay.onclick = (e) => {
-    e.stopPropagation();
-    if (filterWrapper.classList.contains("active")) closeFilter();
-    else {
-      filterWrapper.classList.add("active");
-      mainPanel.classList.add("show");
-    }
-  };
+  const isOpen = filterWrapper.classList.contains("active");
+
+  closeFilter();
+
+  if (!isOpen) {
+    filterWrapper.classList.add("active");
+    dropdownBox.classList.add("show");
+    mainPanel.classList.add("show");
+  }
+};
 
   document.addEventListener("click", (e) => {
     if (filterWrapper.classList.contains("active") && !filterWrapper.contains(e.target)) closeFilter();
@@ -274,16 +285,31 @@ function openModal(book, themeColor) {
   if(yearElem) yearElem.innerText = book.year || "N/A";
 
   // Gestion du bouton ACHETER (Lien externe)
-  const buyBtn = document.getElementById("btn-buy-book");
-  if (buyBtn) {
-    buyBtn.href = book.buyLink || "https://www.amazon.fr"; // Utilise le lien du JSON ou un défaut
+ const buyBtn = document.getElementById("btn-buy-book");
+
+if (buyBtn) {
+  if (book.buyLink && book.buyLink.trim() !== "") {
+    // Si le lien existe dans le JSON
+    buyBtn.href = book.buyLink;
     buyBtn.target = "_blank";
+    buyBtn.style.display = "inline-flex"; // On s'assure qu'il est visible
+  } else {
+    // Si pas de lien (ex: livre épuisé ou non trouvé), on cache le bouton
+    buyBtn.style.display = "none";
   }
+}
   const moreDetailsBtn = document.querySelector(".btn-more-details");
-  if (moreDetailsBtn) {
-    moreDetailsBtn.href = book.youtube || "https://www.youtube.com";
+if (moreDetailsBtn) {
+  // On vérifie si book.youtube existe et n'est pas vide
+  if (book.youtube && book.youtube.trim() !== "") {
+    moreDetailsBtn.href = book.youtube;
     moreDetailsBtn.target = "_blank";
+    moreDetailsBtn.style.display = "block"; // Ou "inline-block" selon ton CSS original
+  } else {
+    // Si pas de lien youtube dans le JSON, on cache le bouton
+    moreDetailsBtn.style.display = "none";
   }
+}
   modal.classList.remove("hidden");
   document.body.style.overflow = 'hidden';
 }
@@ -295,7 +321,6 @@ function closeModal() {
 
 const closeBtn = document.getElementById("close-modal");
 if (closeBtn) closeBtn.onclick = closeModal;
-window.onclick = (e) => { if (e.target.id === "book-modal") closeModal(); };
 
 // --- GESTION DU CONTACT ET EMAILJS ---
 (function() { emailjs.init("MEZOTNid9-GNFm1ju"); })();
@@ -331,7 +356,7 @@ contactForm.addEventListener("submit", function(event) {
     });
 });
 // Sélection des éléments
-const keyBtn = document.querySelector(".pill-button"); // Ton bouton "KEY"
+const keyBtn = document.getElementById("key-button");
 const keyModal = document.getElementById("key-modal");
 const closeKey = document.getElementById("close-key");
 
@@ -351,10 +376,116 @@ if (closeKey) {
   };
 }
 
-// Fermer si on clique à côté de la modal
 window.addEventListener("click", (e) => {
+  if (e.target.id === "book-modal") closeModal();
   if (e.target === keyModal) {
     keyModal.classList.add("hidden");
     document.body.style.overflow = 'auto';
   }
+});
+
+
+// --- GESTION DE LA MODAL DE BIENVENUE (MÉMOIRE LONGUE) ---
+document.addEventListener("DOMContentLoaded", () => {
+    const welcomeModal = document.getElementById("welcome-modal");
+    const closeWelcomeBtn = document.getElementById("close-welcome");
+
+    if (!welcomeModal || !closeWelcomeBtn) return;
+
+    // Utilisation de localStorage au lieu de sessionStorage
+    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+
+    if (!hasSeenWelcome) {
+        welcomeModal.style.display = "flex"; 
+        setTimeout(() => {
+            welcomeModal.style.opacity = "1";
+        }, 10);
+    } else {
+        welcomeModal.style.display = "none";
+    }
+
+    function fadeOutWelcome() {
+        welcomeModal.style.opacity = "0";
+        welcomeModal.style.transition = "opacity 0.5s ease";
+        
+        setTimeout(() => {
+            welcomeModal.style.display = "none";
+            // On enregistre dans le disque dur du navigateur
+            localStorage.setItem("hasSeenWelcome", "true");
+        }, 500);
+    }
+
+    closeWelcomeBtn.addEventListener("click", fadeOutWelcome);
+
+    welcomeModal.addEventListener("click", (e) => {
+        if (e.target === welcomeModal) {
+            fadeOutWelcome();
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const potionBtn = document.getElementById('potion-random');
+
+   function createBubbles() {
+    for (let i = 0; i < 12; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        
+        const size = Math.random() * 10 + 5 + 'px';
+        const randomX = (Math.random() - 0.5) * 80 + 'px';
+        
+        bubble.style.width = size;
+        bubble.style.height = size;
+        bubble.style.left = '50%';
+        bubble.style.top = '10px';
+        bubble.style.setProperty('--random-x', randomX);
+        bubble.style.animationDelay = Math.random() * 0.3 + 's';
+        
+        // Couleur verte forcée
+        bubble.style.background = '#00ff8c'; 
+        bubble.style.boxShadow = '0 0 10px #00ff8c';
+        
+        potionBtn.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 1000);
+    }
+  
+    }
+
+    if (potionBtn) {
+        potionBtn.addEventListener('click', () => {
+            const cells = document.querySelectorAll('.cell');
+            if (cells.length === 0) return;
+
+            // --- AJOUTS ICI ---
+            createBubbles(); // On lance les bulles !
+            potionBtn.classList.add('potion-active'); // On fait trembler la fiole
+            // ------------------
+
+            potionBtn.style.pointerEvents = 'none';
+            potionBtn.style.filter = 'brightness(1.5)'; 
+
+            cells.forEach(cell => cell.classList.add('transmuting'));
+
+            setTimeout(() => {
+                cells.forEach(cell => cell.classList.remove('transmuting'));
+                potionBtn.classList.remove('potion-active'); // On arrête de trembler
+                
+                const randomIndex = Math.floor(Math.random() * cells.length);
+                const randomCell = cells[randomIndex];
+
+                randomCell.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                setTimeout(() => {
+                    randomCell.style.transition = "all 0.5s ease";
+                    randomCell.style.boxShadow = "0 0 40px var(--glow-color)";
+                    randomCell.click(); 
+                    
+                    potionBtn.style.pointerEvents = 'auto';
+                    potionBtn.style.filter = 'none';
+                    
+                    setTimeout(() => randomCell.style.boxShadow = "", 1500);
+                }, 500);
+            }, 1200);
+        });
+    }
 });
