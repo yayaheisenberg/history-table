@@ -20,7 +20,7 @@
     "author": "Ahmet.T.Kuru",
     "description": "Pourquoi les pays à majorité musulmane affichent-ils des niveaux élevés d’autoritarisme et de faibles niveaux de développement socio-économique par rapport aux moyennes mondiales ?",
     "theme": "islam",
-    "image": "images/islam-et-autoritarisme.jpg",
+    "image": "images/islam et autoritarisme.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/CuYz2j5KhHU?si=qKocqYWNA2Nvnnxs",
     "buyLink": "https://www.amazon.fr/dp/2494535085/ref=cm_sw_r_as_gl_apa_gl_i_CCM5BS25XE6XRGW3A3FS?linkCode=ml1&tag=templedulivre-21&linkId=f040a87a359aaef7d7d8236112f2d766",
@@ -135,8 +135,37 @@
     "image": "images/ghazali.jpg",
     "rating": 4,
     "youtube": "https://youtu.be/Sgcmqtdgtlk?si=Tu0mZn_tN6TQmSDb",
+    "buyLink" : "",
     "pages": 114,
     "year": 2022
+  },
+    {
+    "number": 182,
+    "code": "Hit",
+    "title": "Hitler idéologue",
+    "author": "Eberhard Jäckel",
+    "description": "Le livre d'Eberhard Jäckel montre, que, dès les années vingt, Hitler se représentait clairement ses buts politiques. Cette représentation doit être considérée comme l'esquisse de son action. C'était un programme, de violence et d'extermination, cependant homogène et cohérent. ",
+    "theme": "nazisme",
+    "image": "images/hitler.jpg",
+    "rating": 4,
+    "youtube": "",
+    "buyLink" : "https://amzn.eu/d/0d2xWDrv",
+    "pages": 182,
+    "year": 1995
+  },
+  {
+    "number": 320,
+    "code": "Mes",
+    "title": "Messali Hadj",
+    "author": "Benjamin Stora ",
+    "description": "Messali Hadj fut le fondateur du nationalisme algérien. Dès 1926, avec l'Etoile nord-africaine et jusqu'au MNA (Mouvement national algérien) en 1954, il n'a cessé d'animer des organisations nationalistes afin d'obtenir l'indépendance de son pays ",
+    "theme": "algérie",
+    "image": "images/mesali.jpg",
+    "rating": 3,
+    "youtube": "",
+    "buyLink" : "https://www.amazon.fr/dp/2818503051/ref=cm_sw_r_as_gl_apa_gl_i_N919SXR0Q7XCC4YVYJYV?linkCode=ml1&tag=templedulivre-21&linkId=30dfc7c0190c1356cbe9f6224b9f0fd6",
+    "pages": 320,
+    "year": 2012
   }
 ]
 
