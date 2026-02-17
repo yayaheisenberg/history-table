@@ -3,54 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The History Table</title>
+<title>L'Alchimie du Temple | Table Périodique</title>
+<link rel="icon" type="image/png" href="images/a.png">
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
+  <div id="welcome-modal" class="modal">
+  <div class="welcome-content">
+    <div class="chem-box-welcome">Al</div>
+    <h2>L'Alchimie du Temple</h2>
+    <p>Bienvenue dans ce laboratoire littéraire. Explorez une collection d'ouvrages classés par thèmes, de la philosophie à l'histoire, présentés sous forme de tableau périodique dynamique. Si vous êtes intéressés par l'univers littéraire, n'hésitez pas à me suivre sur mes réseaux sociaux !</p>
+    <button id="close-welcome" class="pill-button">Entrer dans le Temple</button>
+  </div>
+</div>
   <main class="page-content">
-
     <header class="main-header">
       <div class="header-title">
-        <p class="subtitle">The Periodic Table of</p>
-        <h1>HISTORICAL NON-FICTION</h1>
-      </div>
-
+  <p class="subtitle">LA TRANSMUTATION DU SAVOIR :</p>
+  <h1>
+    L'<span class="chem-box">Al</span>chimie du <br class="mobile-break"> 
+    <span class="chem-box">Te</span>mple
+  </h1>
+</div>
       <div class="header-actions">
+   <div id="potion-random" class="potion-container" title="Transmutation Aléatoire">
+  <div class="fiole">
+    <div class="liquide"></div>
+  </div>
+  <div class="bulles"></div>
+</div>
         <button class="pill-button" id="key-button">KEY</button>
-
         <div class="filter-wrapper" id="filter-dropdown">
           <div class="filter-display">
             <span>FILTER:</span>
             <span class="filter-icon">▷</span>
           </div>
-
           <div id="main-panel" class="dropdown-box">
             <div class="dropdown-header">
               <span>FILTER:</span>
               <span class="icon-funnel">▽</span>
             </div>
             <div class="dropdown-divider"></div>
-
             <div class="dropdown-item" data-value="alpha">
               <div class="icon">⇅</div>
               <span>Alphabetical</span>
             </div>
-
             <div class="dropdown-item" data-value="open-categories">
               <div class="icon">⊞</div>
               <span>Categories</span>
               <span style="margin-left:auto;">→</span>
             </div>
-
             <div class="dropdown-item" data-value="rating">
               <div class="icon">★</div>
               <span>Ratings</span>
             </div>
           </div>
-
           <div id="category-panel" class="dropdown-box" style="display:none;">
             <div class="dropdown-header">
               <div id="back-to-main" style="cursor:pointer; display:flex; align-items:center; gap:10px;">
@@ -59,58 +68,48 @@
               </div>
               <span class="icon-funnel">▽</span>
             </div>
-            
             <button id="reset-filter"
               style="width:100%; padding:10px; border-radius:12px; border:2px solid #ffcccc; background:rgba(255,107,107,0.1); color:white; font-weight:800; cursor:pointer; text-transform:uppercase; margin-top:10px;">
               Reset filters
             </button>
-
             <div class="dropdown-divider"></div>
-
             <div class="category-list" style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
               <label class="cat-item nazisme" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Nazisme</span>
                 <input type="checkbox" value="nazisme" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #f26d6d; border-radius:6px;"></span>
               </label>
-
               <label class="cat-item algérie" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Algérie</span>
                 <input type="checkbox" value="algérie" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #00bb06; border-radius:6px;"></span>
               </label>
-
               <label class="cat-item islam" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Islam</span>
                 <input type="checkbox" value="islam" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #00ff8c; border-radius:6px;"></span>
               </label>
-
               <label class="cat-item philosophie" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Philosophie</span>
                 <input type="checkbox" value="philosophie" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #00e5ff; border-radius:6px;"></span>
               </label>
-
               <label class="cat-item art" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Art</span>
                 <input type="checkbox" value="art" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffff00; border-radius:6px;"></span>
               </label>
-
               <label class="cat-item europe" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <span>Europe</span>
                 <input type="checkbox" value="europe" class="cat-check">
                 <span class="checkmark" style="width:20px; height:20px; border:2px solid #ff7c1f; border-radius:6px;"></span>
               </label>
             </div>
-
             <button id="apply-filter"
               style="width:100%; padding:12px; border-radius:12px; border:2px solid #00d4ff; background:rgba(0,212,255,0.1); color:white; font-weight:800; cursor:pointer; text-transform:uppercase;">
               Apply
             </button>
           </div>
-
           <div id="rating-panel" class="dropdown-box" style="display:none;">
             <div class="dropdown-header">
               <div id="back-to-main-rating" style="cursor:pointer; display:flex; align-items:center; gap:10px;">
@@ -119,11 +118,8 @@
               </div>
               <span class="icon-funnel">▽</span>
             </div>
-
             <div class="dropdown-divider"></div>
-
             <div class="rating-list" style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
-              
               <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -137,7 +133,6 @@
                   <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
                 </div>
               </label>
-
               <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -151,7 +146,6 @@
                   <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
                 </div>
               </label>
-
               <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -165,7 +159,6 @@
                   <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
                 </div>
               </label>
-
               <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -179,7 +172,6 @@
                   <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
                 </div>
               </label>
-
               <label class="rating-item" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                 <div class="stars-display" style="color:#ffcc00; display:flex; gap:2px;">
                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -193,27 +185,21 @@
                   <span class="checkmark" style="width:20px; height:20px; border:2px solid #ffcc00; border-radius:6px;"></span>
                 </div>
               </label>
-
             </div>
-
             <button id="apply-rating" class="pill-button" style="width:100%">Apply</button>
             <button id="reset-rating" class="pill-button" style="width:100%; margin-top:10px; border-color:#ffcccc; color:#ffcccc;">Reset</button>
           </div>
         </div>
       </div>
     </header>
-
     <div class="table-scroll-area">
       <main class="table" id="book-table"></main>
     </div>
-
   </main>
-
-  <footer class="main-footer">
-    <button class="pill-button footer-pill" id="contact-btn">Contact Us</button>
-    <div class="pagination">Page 1 / 5</div>
-  </footer>
-
+<footer class="main-footer">
+  <span class="footer-copy">© 2026 L'Alchimie du Temple. All rights reserved.</span>
+  <button id="contact-btn" class="pill-button footer-pill">Contact</button>
+</footer>
   <div id="book-modal" class="modal hidden">
     <div class="modal-content">
       <span id="close-modal">&times;</span>
@@ -241,7 +227,6 @@
     <span><strong>PAGES</strong> <span id="modal-pages-main">462</span></span>
     <span><strong>PUBLISHED</strong> <span id="modal-year-main">2023</span></span>
   </div>
-  
   <a href="#" id="btn-buy-book" class="btn-buy-now">
     ACHETER
     <span class="buy-icon">🛒</span>
@@ -251,7 +236,6 @@
       </div>
     </div>
   </div>
-
   <div id="contact-modal" class="modal hidden">
     <div class="modal-content contact-modal">
       <span class="close-modal" id="close-contact">&times;</span>
@@ -265,12 +249,10 @@
       </form>
     </div>
   </div>
-
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <div id="key-modal" class="modal hidden">
   <div class="key-modal-content">
     <div id="close-key">✕</div>
-    
     <div class="key-preview-card">
       <div class="preview-top">
         <span>Page #</span>
@@ -279,7 +261,6 @@
       <div class="preview-symbol">Symbol</div>
       <div class="preview-title">Book Title</div>
     </div>
-
     <div class="key-grid">
       <div class="key-item key-algérie"><span class="key-number">01</span><span class="key-label">Algérie</span></div>
       <div class="key-item key-nazisme"><span class="key-number">02</span><span class="key-label">Nazisme</span></div>
