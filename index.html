@@ -197,7 +197,7 @@
     </div>
   </main>
 <footer class="main-footer">
-  <span class="footer-copy">© 2026 L'Alchimie du Temple. All rights reserved.</span>
+  <span class="footer-copy">© 2026 Temple du livre. All rights reserved.</span>
   <button id="contact-btn" class="pill-button footer-pill">Contact</button>
 </footer>
   <div id="book-modal" class="modal hidden">
@@ -222,6 +222,31 @@
           <p id="modal-description-main" class="modal-description"></p>
         </div>
       </div>
+<div class="reaction-section">
+  <p class="reaction-title">TRANSFORMATION DE L'ESPRIT :</p>
+  <div class="reaction-buttons">
+  <button class="react-btn like" id="btn-like">
+    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <span class="count" id="count-like">0</span>
+  </button>
+  
+  <button class="react-btn dislike" id="btn-dislike">
+    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <span class="count" id="count-dislike">0</span>
+  </button>
+</div>
      <div class="modal-footer-action">
   <div class="modal-stats-info">
     <span><strong>PAGES</strong> <span id="modal-pages-main">462</span></span>
@@ -271,6 +296,7 @@
     </div>
   </div>
 </div>
-  <script src="js/script.js"></script>
+  <div id="hover-overlay"></div>
+  <script type="module" src="js/script.js"></script>
 </body>
 </html>
