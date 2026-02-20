@@ -1,48 +1,85 @@
+// --- CONFIGURATION FIREBASE ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDa1Ltp2pG0q0GvOntog4EEg21ixGzDF4E",
+  authDomain: "l-alchimiste-du-temple.firebaseapp.com",
+  databaseURL: "https://l-alchimiste-du-temple-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "l-alchimiste-du-temple",
+  storageBucket: "l-alchimiste-du-temple.firebasestorage.app",
+  messagingSenderId: "257593659996",
+  appId: "1:257593659996:web:c93a30b392cc75e0f30c99",
+  measurementId: "G-5GXYMWRXJR"
+};
+
+// Initialisation
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+// --- VARIABLES GLOBALES ---
 const table = document.querySelector(".table");
 let allBooks = [];
 let originalBooks = [];
-let isAlphaSorted = false;
 let currentDisplayedBooks = [];
+let isAlphaSorted = false;
+
+// --- HOVER CARD ---
 const hCard = document.createElement("div");
 hCard.className = "hover-card";
 hCard.style.display = "none";
 document.body.appendChild(hCard);
 
-// 1. CHARGEMENT DES DONNÉES
+// --- CHARGEMENT DES LIVRES ---
 fetch("data/books.json")
   .then(res => res.json())
   .then(data => {
-    allBooks = data;
+    allBooks = [...data];
     originalBooks = [...data];
-    renderTable(allBooks);
+    currentDisplayedBooks = [...data];
+    renderTable(currentDisplayedBooks);
     initFilterLogic();
   });
+// Génère le HTML des étoiles avec support des décimales
+function generateStarsHTML(rating) {
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    let fillWidth = 0;
+    if (rating >= i) fillWidth = 100;
+    else if (rating > i - 1) fillWidth = (rating - (i - 1)) * 100;
 
+    html += `
+      <span class="star-container">
+        ★
+        <span class="star-fill" style="width:${fillWidth}%">★</span>
+      </span>`;
+  }
+  return html;
+}
+// --- COULEURS PAR THÈME ---
 function getThemeColor(theme) {
   const colors = { algérie: "#00bb06", nazisme: "#ff2d2d", islam: "#00ff8c", europe: "#ff7c1f", art: "#ffff00", philosophie: "#00e5ff" };
   return colors[theme.toLowerCase()] || "#008daa";
 }
-// 2. RENDU DU TABLEAU
+
+// --- RENDU DU TABLEAU ---
 function renderTable(booksToDisplay) {
+  currentDisplayedBooks = booksToDisplay;
   table.innerHTML = "";
 
-  // 1. On calcule combien de colonnes peut contenir l'écran
-  // (On divise la largeur de la table par la largeur d'une cellule + gap)
-  const cellWidth = 110 + 12; // largeur cellule + gap
+  const cellWidth = 122; // 110 + 12
   const columns = Math.floor(table.offsetWidth / cellWidth);
-  
-  // 2. On définit un nombre de lignes minimum (ex: 5) ou on calcule pour remplir la hauteur
-  const minRows = 6; 
+  const minRows = 6;
   const totalRequiredSlots = Math.max(booksToDisplay.length, columns * minRows);
-  
-  // 3. On arrondit au multiple de colonnes supérieur pour finir la ligne proprement
   const totalSlots = Math.ceil(totalRequiredSlots / columns) * columns;
 
   for (let i = 0; i < totalSlots; i++) {
     const book = booksToDisplay[i];
-    
+
+    const cell = document.createElement("div");
     if (book) {
-      const cell = document.createElement("div");
       const themeColor = getThemeColor(book.theme);
       cell.className = `cell ${book.theme}`;
       cell.style.color = themeColor;
@@ -52,230 +89,253 @@ function renderTable(booksToDisplay) {
         <div class="title">${book.title}</div>
       `;
 
-      cell.addEventListener("mouseenter", () => {
-        if (window.innerWidth <= 768) return; // ⛔ mobile
-        const starsHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
-        hCard.innerHTML = `
-          <div class="hover-header">
-            <div class="hover-rating-section">
-              <div class="hover-score" style="color: #ffcc00;">${book.rating}.0</div>
-              <div class="hover-stars" style="color: #ffcc00;">${starsHTML}</div>
-              <span class="hover-rating-label">My rating</span>
-            </div>
-            <div class="hover-image-container">
-              <img src="${book.image}" alt="Couverture">
-            </div>
-          </div>
-          <div class="hover-body">
-            <div class="hover-description-box">${book.description || "Aucun résumé disponible."}</div>
-            <h3 class="hover-book-title">${book.title}</h3>
-            <div class="hover-footer-row">
-              <p class="hover-author">By ${book.author || 'Unknown'}</p>
-              <span class="hover-badge" style="background-color: ${themeColor}">${book.theme}</span>
-            </div>
-          </div>
-        `;
-        hCard.style.display = "flex";
+      cell.addEventListener("mouseenter", (e) => {
+        if (window.innerWidth <= 768) return;
+        showHoverCard(book, e);
       });
 
       cell.addEventListener("mousemove", (e) => {
-  if (window.innerWidth <= 768 || hCard.style.display === "none") return;
+        if (window.innerWidth <= 768 || hCard.style.display === "none") return;
+        moveHoverCard(e);
+      });
 
+      cell.addEventListener("mouseleave", () => hideHoverCard());
+      cell.addEventListener("click", () => openModal(book, themeColor));
+    } else {
+      cell.className = "empty-cell";
+    }
+    table.appendChild(cell);
+  }
+}
+
+// --- HOVER CARD FUNCTIONS ---
+function showHoverCard(book, e) {
+  const themeColor = getThemeColor(book.theme);
+  const starsHTML = generateStarsHTML(book.rating);
+  const displayRating = book.rating.toFixed(1).replace('.', ',')
+
+  hCard.innerHTML = `
+    <div class="hover-header">
+      <div class="hover-rating-section">
+    <div class="hover-score" style="color: #ffcc00;">${book.rating.toFixed(1).replace('.', ',')}</div>
+        <div class="hover-stars" style="color: #ffcc00;">${starsHTML}</div>
+        <span class="hover-rating-label">My rating</span>
+      </div>
+      <div class="hover-image-container">
+        <img src="${book.image}" alt="Couverture">
+      </div>
+    </div>
+    <div class="hover-body">
+      <div class="hover-description-box">${book.description || "Aucun résumé disponible."}</div>
+      <h3 class="hover-book-title">${book.title}</h3>
+      <div class="hover-footer-row">
+        <p class="hover-author">By ${book.author || 'Unknown'}</p>
+        <span class="hover-badge" style="background-color: ${themeColor}">${book.theme}</span>
+      </div>
+    </div>
+  `;
+  hCard.style.display = "flex";
+  moveHoverCard(e);
+}
+
+function moveHoverCard(e) {
   const cardWidth = 450;
   const margin = 20;
-
-  const left = e.clientX > window.innerWidth / 2
-    ? e.clientX - cardWidth - margin
-    : e.clientX + margin;
-
+  const left = e.clientX > window.innerWidth / 2 ? e.clientX - cardWidth - margin : e.clientX + margin;
   hCard.style.left = `${left}px`;
   hCard.style.top = `${e.clientY - 40}px`;
   hCard.style.opacity = "1";
-});
-
-
-      cell.addEventListener("mouseleave", () => {
-        hCard.style.display = "none";
-        hCard.style.opacity = "0";
-      });
-
-      cell.addEventListener("click", () => openModal(book, themeColor));
-      table.appendChild(cell);
-      
-    } else {
-      // Pour les cases vides après tes livres
-      const empty = document.createElement("div");
-      empty.className = "empty-cell";
-      table.appendChild(empty);
-    }
-  }
 }
+
+function hideHoverCard() {
+  hCard.style.display = "none";
+  hCard.style.opacity = "0";
+}
+
+// --- RESPONSIVE ---
 let lastWidth = window.innerWidth;
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   if (window.innerWidth !== lastWidth) {
     lastWidth = window.innerWidth;
     renderTable(currentDisplayedBooks);
   }
-})
-             
+});
 
-// 3. LOGIQUE DE FILTRAGE
+// --- FILTRE LOGIC ---
 function initFilterLogic() {
   const filterWrapper = document.getElementById("filter-dropdown");
   const mainPanel = document.getElementById('main-panel');
   const categoryPanel = document.getElementById('category-panel');
   const ratingPanel = document.getElementById('rating-panel');
-  
   const filterDisplay = document.querySelector(".filter-display");
   const alphaBtn = document.querySelector('[data-value="alpha"]');
   const openCatBtn = document.querySelector('[data-value="open-categories"]');
   const openRatingBtn = document.querySelector('[data-value="rating"]');
-   const dropdownBox = filterWrapper.querySelector(".dropdown-box");
-
+  const dropdownBox = filterWrapper.querySelector(".dropdown-box");
   const backBtn = document.getElementById('back-to-main');
   const backToMainRating = document.getElementById('back-to-main-rating');
-  
   const applyBtn = document.getElementById('apply-filter');
   const applyRatingBtn = document.getElementById('apply-rating');
-  
-  const categoryCheckboxes = document.querySelectorAll('.cat-check');
-  const ratingCheckboxes = document.querySelectorAll('.rating-check');
-  
   const resetBtn = document.getElementById('reset-filter');
   const resetRatingBtn = document.getElementById('reset-rating');
-  if (ratingPanel) {
-  ratingPanel.onclick = (e) => {
-    e.stopPropagation();
-  };
-}
+  const categoryCheckboxes = document.querySelectorAll('.cat-check');
+  const ratingCheckboxes = document.querySelectorAll('.rating-check');
 
-// Fais la même chose pour le panneau catégorie si ce n'est pas déjà fait
-if (categoryPanel) {
-  categoryPanel.onclick = (e) => {
-    e.stopPropagation();
-  };
-}
-function closeFilter() {
-  filterWrapper.classList.remove("active");
-  dropdownBox.classList.remove("show");
-  mainPanel.classList.remove("show");
-  categoryPanel.classList.remove("show");
-  if (ratingPanel) ratingPanel.classList.remove("show");
-}
+  // Empêche la fermeture du dropdown au clic dedans
+  [categoryPanel, ratingPanel].forEach(panel => {
+    if (panel) panel.addEventListener('click', e => e.stopPropagation());
+  });
 
+  function closeFilter() {
+    filterWrapper.classList.remove("active");
+    dropdownBox.classList.remove("show");
+    mainPanel.classList.remove("show");
+    if(categoryPanel) categoryPanel.classList.remove("show");
+    if(ratingPanel) ratingPanel.classList.remove("show");
+  }
 
-  // FONCTION DE FILTRAGE GLOBALE
   function applyAllFilters() {
     const checkedCats = Array.from(categoryCheckboxes).filter(cb => cb.checked).map(cb => cb.value.toLowerCase());
     const checkedRatings = Array.from(ratingCheckboxes).filter(cb => cb.checked).map(cb => parseInt(cb.value));
-
     let filtered = allBooks.filter(book => {
+      // Vérification Catégorie
       const matchCat = checkedCats.length === 0 || checkedCats.includes(book.theme.toLowerCase());
-      const matchRating = checkedRatings.length === 0 || checkedRatings.includes(book.rating);
+      
+      // Vérification Note (on arrondit à l'inférieur pour inclure les virgules)
+      // Math.floor(4.5) donnera 4, donc si 4 est coché, le livre est inclus.
+      const matchRating = checkedRatings.length === 0 || checkedRatings.includes(Math.floor(book.rating));
+      
       return matchCat && matchRating;
     });
 
-    if (isAlphaSorted) {
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
+    if (isAlphaSorted) filtered.sort((a,b) => a.title.localeCompare(b.title));
     renderTable(filtered);
     closeFilter();
   }
-filterDisplay.onclick = (e) => {
+  // --- BOUTON FILTER ---
+ filterDisplay.addEventListener("click", (e) => {
   e.preventDefault();
   e.stopPropagation();
 
-  const isOpen = filterWrapper.classList.contains("active");
+  const isActive = filterWrapper.classList.contains("active");
 
-  closeFilter();
-
-  if (!isOpen) {
+  if (!isActive) {
+    // On ouvre
     filterWrapper.classList.add("active");
     dropdownBox.classList.add("show");
     mainPanel.classList.add("show");
+    // On ferme les sous-panels si ouverts
+    if(categoryPanel) categoryPanel.classList.remove("show");
+    if(ratingPanel) ratingPanel.classList.remove("show");
+  } else {
+    // On ferme
+    filterWrapper.classList.remove("active");
+    dropdownBox.classList.remove("show");
+    mainPanel.classList.remove("show");
+    if(categoryPanel) categoryPanel.classList.remove("show");
+    if(ratingPanel) ratingPanel.classList.remove("show");
   }
-};
+});
 
-  document.addEventListener("click", (e) => {
-    if (filterWrapper.classList.contains("active") && !filterWrapper.contains(e.target)) closeFilter();
-  });
+  // --- CLIC HORS FILTRE ---
+ document.addEventListener("click", (e) => {
+  if (!filterWrapper.contains(e.target)) {
+    filterWrapper.classList.remove("active");
+    dropdownBox.classList.remove("show");
+    mainPanel.classList.remove("show");
+    if(categoryPanel) categoryPanel.classList.remove("show");
+    if(ratingPanel) ratingPanel.classList.remove("show");
+  }
+});
 
-  // NAVIGATION ENTRE PANNEAUX
-  if (openCatBtn) {
-    openCatBtn.onclick = (e) => {
-      e.stopPropagation();
-      mainPanel.classList.remove("show");
-      categoryPanel.classList.add("show");
+  // --- NAVIGATION PANNEAUX ---
+  if (openCatBtn) openCatBtn.addEventListener("click", e => { e.stopPropagation(); mainPanel.classList.remove("show"); categoryPanel.classList.add("show"); });
+  if (openRatingBtn) openRatingBtn.addEventListener("click", e => { e.stopPropagation(); mainPanel.classList.remove("show"); ratingPanel.classList.add("show"); });
+  if (backBtn) backBtn.addEventListener("click", e => { e.stopPropagation(); categoryPanel.classList.remove("show"); mainPanel.classList.add("show"); });
+  if (backToMainRating) backToMainRating.addEventListener("click", e => { e.stopPropagation(); ratingPanel.classList.remove("show"); mainPanel.classList.add("show"); });
+
+  // --- ACTIONS TRI / APPLY / RESET ---
+  if (alphaBtn) alphaBtn.addEventListener("click", e => { e.stopPropagation(); isAlphaSorted = !isAlphaSorted; alphaBtn.style.color = isAlphaSorted ? "#00d4ff" : "white"; applyAllFilters(); });
+  if (applyBtn) applyBtn.addEventListener("click", applyAllFilters);
+  if (applyRatingBtn) applyRatingBtn.addEventListener("click", applyAllFilters);
+  if (resetBtn) resetBtn.addEventListener("click", e => { e.stopPropagation(); categoryCheckboxes.forEach(cb => cb.checked = false); applyAllFilters(); });
+  if (resetRatingBtn) resetRatingBtn.addEventListener("click", e => { e.stopPropagation(); ratingCheckboxes.forEach(cb => cb.checked = false); applyAllFilters(); });
+}
+function setupReactions(bookNumber) {
+    const btnLike = document.getElementById('btn-like');
+    const btnDislike = document.getElementById('btn-dislike');
+    
+    if (!btnLike || !btnDislike) return;
+
+    // Définition des références Firebase
+    const likeRef = ref(db, `reactions/${bookNumber}/likes`);
+    const dislikeRef = ref(db, `reactions/${bookNumber}/dislikes`);
+
+    // 1. Vérifier si l'utilisateur a déjà voté
+    const hasVoted = localStorage.getItem(`voted_${bookNumber}`);
+    if (hasVoted) {
+        btnLike.style.opacity = "0.3";
+        btnDislike.style.opacity = "0.3";
+        btnLike.style.pointerEvents = "none";
+        btnDislike.style.pointerEvents = "none";
+    } else {
+        // On remet à l'état normal si pas voté (important quand on change de livre)
+        btnLike.style.opacity = "1";
+        btnDislike.style.opacity = "1";
+        btnLike.style.pointerEvents = "auto";
+        btnDislike.style.pointerEvents = "auto";
+    }
+
+    // 2. Écouter les changements en temps réel
+    onValue(likeRef, (snap) => {
+        document.getElementById('count-like').innerText = snap.val() || 0;
+    });
+    onValue(dislikeRef, (snap) => {
+        document.getElementById('count-dislike').innerText = snap.val() || 0;
+    });
+
+    // 3. Actions au clic
+    btnLike.onclick = (e) => {
+        e.preventDefault();
+        executeVote(bookNumber, 'likes', btnLike, btnDislike);
     };
-  }
 
-  if (openRatingBtn) {
-    openRatingBtn.onclick = (e) => {
-      e.stopPropagation();
-      mainPanel.classList.remove("show");
-      ratingPanel.classList.add("show");
+    btnDislike.onclick = (e) => {
+        e.preventDefault();
+        executeVote(bookNumber, 'dislikes', btnLike, btnDislike);
     };
-  }
-
-  if (backBtn) {
-    backBtn.onclick = (e) => {
-      e.stopPropagation();
-      categoryPanel.classList.remove("show");
-      mainPanel.classList.add("show");
-    };
-  }
-
-  if (backToMainRating) {
-    backToMainRating.onclick = (e) => {
-      e.stopPropagation();
-      ratingPanel.classList.remove("show");
-      mainPanel.classList.add("show");
-    };
-  }
-
-  // ACTIONS (TRI, APPLY, RESET)
-  if (alphaBtn) {
-    alphaBtn.onclick = (e) => {
-      e.stopPropagation();
-      isAlphaSorted = !isAlphaSorted;
-      alphaBtn.style.color = isAlphaSorted ? "#00d4ff" : "white";
-      applyAllFilters();
-    };
-  }
-
-  if (applyBtn) applyBtn.onclick = applyAllFilters;
-  if (applyRatingBtn) applyRatingBtn.onclick = applyAllFilters;
-
-  if (resetBtn) {
-    resetBtn.onclick = (e) => {
-      e.stopPropagation();
-      categoryCheckboxes.forEach(cb => cb.checked = false);
-      applyAllFilters();
-    };
-  }
-
-  if (resetRatingBtn) {
-    resetRatingBtn.onclick = (e) => {
-      e.stopPropagation();
-      ratingCheckboxes.forEach(cb => cb.checked = false);
-      applyAllFilters();
-    };
-  }
 }
 
+// Fonction utilitaire pour traiter le vote
+function executeVote(bookNumber, type, btn1, btn2) {
+    if (localStorage.getItem(`voted_${bookNumber}`)) return;
+
+    const reactionRef = ref(db, `reactions/${bookNumber}/${type}`);
+    
+    runTransaction(reactionRef, (current) => (current || 0) + 1).then(() => {
+        localStorage.setItem(`voted_${bookNumber}`, "true");
+        
+        // Effet visuel immédiat
+        btn1.style.opacity = "0.3";
+        btn2.style.opacity = "0.3";
+        btn1.style.pointerEvents = "none";
+        btn2.style.pointerEvents = "none";
+        btn1.classList.add('voted-success');
+    });
+}
 // 4. MODAL
 function openModal(book, themeColor) {
   const modal = document.getElementById("book-modal");
   document.getElementById("modal-img-main").src = book.image || "";
   document.getElementById("modal-title-main").innerText = book.title;
   document.getElementById("modal-author-main").innerText = book.author || "Unknown";
+
   document.getElementById("modal-description-main").innerText = book.description || "Aucune description disponible.";
   const badge = document.getElementById("modal-badge-main");
   badge.innerText = book.theme;
   badge.style.backgroundColor = themeColor;
-  document.getElementById("modal-rating-num").innerText = `${book.rating}.0`;
-  document.getElementById("modal-stars-main").innerHTML = "★".repeat(book.rating) + "☆".repeat(5 - book.rating);
+document.getElementById("modal-rating-num").innerText = book.rating.toFixed(1).replace('.', ',');
+  document.getElementById("modal-stars-main").innerHTML = generateStarsHTML(book.rating);
   document.getElementById("modal-pages-main").innerText = book.pages || "N/A";
   document.getElementById("modal-year-main").innerText = book.year || "N/A";
   
@@ -312,11 +372,13 @@ if (moreDetailsBtn) {
 }
   modal.classList.remove("hidden");
   document.body.style.overflow = 'hidden';
+  setupReactions(book.number);
 }
 
 function closeModal() {
   document.getElementById("book-modal").classList.add("hidden");
   document.body.style.overflow = 'auto';
+  
 }
 
 const closeBtn = document.getElementById("close-modal");
@@ -489,3 +551,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// Fonction pour mettre à jour les réactions dans la modale
+function handleReactions(bookId) {
+  const likeBtn = document.getElementById('btn-like');
+  const dislikeBtn = document.getElementById('btn-dislike');
+  
+  // 1. Lire les données en temps réel depuis Firebase
+  // (Exemple schématique de la logique)
+  const dbRef = firebase.database().ref('reactions/' + bookId);
+  
+  dbRef.on('value', (snapshot) => {
+    const data = snapshot.val() || { likes: 0, dislikes: 0 };
+    document.getElementById('count-like').innerText = data.likes;
+    document.getElementById('count-dislike').innerText = data.dislikes;
+  });
+
+  // 2. Action au clic
+  likeBtn.onclick = () => {
+    dbRef.child('likes').set(firebase.database.ServerValue.increment(1));
+    likeBtn.disabled = true; // On évite le spam
+  };
+}
