@@ -196,10 +196,6 @@
       <main class="table" id="book-table"></main>
     </div>
   </main>
-<footer class="main-footer">
-  <span class="footer-copy">© 2026 Temple du livre. All rights reserved.</span>
-  <button id="contact-btn" class="pill-button footer-pill">Contact</button>
-</footer>
   <div id="book-modal" class="modal hidden">
     <div class="modal-content">
       <span id="close-modal">&times;</span>
@@ -223,26 +219,18 @@
         </div>
       </div>
 <div class="reaction-section">
-  <p class="reaction-title">TRANSFORMATION DE L'ESPRIT :</p>
-  <div class="reaction-buttons">
+  <p class="reaction-title">Votre avis sur le livre :</p>
+<div class="reaction-buttons">
   <button class="react-btn like" id="btn-like">
-    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
     </svg>
     <span class="count" id="count-like">0</span>
   </button>
   
   <button class="react-btn dislike" id="btn-dislike">
-    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path>
     </svg>
     <span class="count" id="count-dislike">0</span>
   </button>
@@ -297,6 +285,10 @@
   </div>
 </div>
   <div id="hover-overlay"></div>
+  <footer class="main-footer">
+  <span class="footer-copy">© 2026 Temple du livre. All rights reserved.</span>
+  <button id="contact-btn" class="pill-button footer-pill">Contact</button>
+</footer>
   <script type="module" src="js/script.js"></script>
 </body>
 </html>
