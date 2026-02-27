@@ -31,7 +31,6 @@ body {
   --glow-color: #00ff22; 
   --bg-dark: #0a0a0a;
     --dynamic-color: #00d4ff; 
-
 }
 .header-title {
   display: flex;
@@ -73,7 +72,7 @@ body {
   display: inline-flex;
   font-weight: 900;
   position: relative;
-  font-family: 'Space Mono', monospace; /* Un look scientifique/labo */
+  font-family: 'Space Mono', monospace; 
 }
 .chem-box::before {
   content: '∞'; 
@@ -86,7 +85,6 @@ body {
 .mobile-break {
   display: none;
 }
-
 .header-actions {
   display: flex;
   gap: 15px;
@@ -97,44 +95,32 @@ body {
   position: relative;
   height: 42px;
   padding: 0 25px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   background: transparent;
   border: 2px solid var(--dynamic-color);
   border-radius: 30px;
-
   color: var(--dynamic-color);
   font-family: 'Space Mono', monospace;
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-
   cursor: pointer;
   box-sizing: border-box;
-
-  /* 🔒 Pas de néon par défaut */
   text-shadow: none;
   box-shadow: none;
-
-  /* 🎯 Transitions ciblées */
   transition:
     background-color 0.25s ease,
     color 0.25s ease,
     box-shadow 0.25s ease;
 }
-
-
 .filter-display {
   display: flex;
   align-items: center;
   gap: 8px;
-
   font-size: 0.8rem;
   white-space: nowrap;
-
   cursor: pointer;
   touch-action: manipulation;
 }
@@ -142,17 +128,14 @@ body {
   display: inline-block;
   font-size: 0.9rem;
   color: inherit;
-
   transition: transform 0.3s ease;
 }
-
 .filter-wrapper.active .filter-icon {
  transform: rotate(90deg);
 }
 .dropdown-box.show {
   display: block !important;
 }
-
 .dropdown-header {
   display: flex;
   justify-content: space-between;
@@ -191,39 +174,29 @@ body {
   margin: 0 auto;
   padding: 20px;
 }
-/* L'overlay qui couvre tout l'écran */
-/* 1. L'overlay de fond */
 .hover-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7); /* Noir profond */
-  backdrop-filter: blur(10px);    /* Flou élégant */
+  background: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(10px);    
   -webkit-backdrop-filter: blur(10px);
-  z-index: 900;                  /* Sous la carte, mais sur le reste */
-  pointer-events: none;          /* Ne bloque pas les clics */
+  z-index: 900;                  
+  pointer-events: none;          
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-
-/* 2. Activation de l'overlay quand on survole une VRAIE cellule */
 body:has(.cell:hover) .hover-overlay {
   opacity: 1;
 }
-
-/* 3. Mise en avant de la cellule survolée */
 .cell:hover {
-  z-index: 1001 !important; /* Passe au-dessus de l'overlay */
+  z-index: 1001 !important; 
   position: relative;
 }
-
-/* 4. Effet sur les autres cartes (celles non survolées) */
 .table:has(.cell:hover) .cell:not(:hover) {
   filter: grayscale(0.8) brightness(0.4);
   opacity: 0.5;
-  transform: scale(0.9); /* Effet de recul */
+  transform: scale(0.9); 
 }
-
-/* 5. On ignore totalement les zones vides */
 .table:has(.empty-cell:hover) ~ .hover-overlay,
 body:has(.empty-cell:hover) .hover-overlay {
   opacity: 0 !important;
@@ -234,24 +207,17 @@ body:has(.empty-cell:hover) .hover-overlay {
   width: 110px;
   height: 140px;
   padding: 10px 8px;
-
   display: flex;
   flex-direction: column;
-
   background-color: #0b2a2e;
   border: 2px solid currentColor;
-
   cursor: pointer;
   z-index: 1;
-
-  /* 🎯 Transitions ciblées (PAS de all) */
   transition:
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.3s ease,
     z-index 0s;
 }
-/* Hover desktop uniquement */
-
 .number { font-size: 0.9rem; font-weight: 500; }
 .code {
   font-size: 2.4rem;
@@ -281,20 +247,15 @@ body:has(.empty-cell:hover) .hover-overlay {
   position: absolute;
   top: 12px;
   right: 12px;
-
   width: 8px;
   height: 8px;
   border-radius: 50%;
-
   background-color: currentColor;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-
   z-index: 5;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-
 .empty-cell {
   width: 110px;
   height: 140px;
@@ -338,6 +299,7 @@ body:has(.empty-cell:hover) .hover-overlay {
   color: white;
   box-shadow: 0 25px 50px rgba(0,0,0,0.6);
   cursor: default; 
+  gap: 30px;
 } 
 .modal-footer-action {
   display: flex;
@@ -386,7 +348,6 @@ body:has(.empty-cell:hover) .hover-overlay {
   transform: translateY(-2px);
   box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
 }
-
 #close-modal {
   position: absolute;
   top: 20px;
@@ -422,10 +383,13 @@ body:has(.empty-cell:hover) .hover-overlay {
   gap: 20px; 
 }
 #modal-img-main { 
-    width: 100%; 
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: 250px;           
+  height: 390px;          
+  object-fit: cover;      
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  display: block;
+  margin: 0 auto;         
 }
 .btn-more-details {
   display: block;
@@ -438,6 +402,8 @@ body:has(.empty-cell:hover) .hover-overlay {
   border: 1px solid rgba(255, 255, 255, 0.8);
   color: white;
   transition: all 0.3s ease;
+  margin-top: -10px; 
+  margin-bottom: 5px; 
 }
 .modal-right {
   display: flex;
@@ -486,52 +452,45 @@ padding-right: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between; 
-  width: 100%;
+  width:345px;
   padding: 12px 15px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-
 .big-rating { 
   font-size: 3rem; 
   font-weight: 800; 
   color: #ffcc00; 
   line-height: 1; 
-  min-width: 80px; /* Évite que le texte bouge selon le chiffre */
+  min-width: 80px; 
 }
-
-/* Système d'étoiles avec remplissage partiel */
 .stars { 
   display: flex; 
   gap: 2px;
-  font-size: 1.4rem; /* Un peu plus grand pour la lisibilité */
+  font-size: 1.4rem; 
 }
-
 .star-container {
   position: relative;
   display: inline-block;
-  color: rgba(255, 255, 255, 0.2); /* Couleur de l'étoile vide */
+  color: rgba(255, 255, 255, 0.2); 
   cursor: default;
 }
-
 .star-fill {
   position: absolute;
   top: 0;
   left: 0;
   white-space: nowrap;
   overflow: hidden;
-  color: #ffcc00; /* Ta couleur dorée */
-  width: 0%; /* Sera modifié dynamiquement par le JS */
+  color: #ffcc00; 
+  width: 0%; 
   text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
 }
-
 .modal-description::-webkit-scrollbar {
   display: none;
 }
 .btn-buy-book { display: none; }
-
 .modal-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -581,9 +540,10 @@ padding-right: 50px;
   color: rgba(230, 242, 243, 0.9);
   margin-bottom: 15px;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: hidden; 
+  padding-right: 0;
 }
 .hover-book-title {
   font-size: 1.2rem;
@@ -694,8 +654,6 @@ padding-right: 50px;
   font-weight: 900;
   font-size: 14px;
 }
-
-
 #filter-select { display: none; }
 .dropdown-box {
   display: none; 
@@ -829,25 +787,27 @@ padding-right: 50px;
   justify-content: center;
   align-items: center;
   padding: 20px 40px;
-  width: 100%;             /* Force la largeur totale */
-  max-width: 100vw;        /* Empêche le débordement */
+  width: 100%;             
+  max-width: 100vw;        
   box-sizing: border-box;
-  position: relative;      /* Utile selon ton layout global */
+  position: relative;      
   padding: 15px 0 ;
 }
 .copyright {
-  flex: 1;                /* Prend l'espace disponible à gauche */
+  flex: 1;                
   text-align: left;
 }
-/* Style par défaut (PC) */
-.footer-copy {
-  display: inline; /* Le copyright est visible */
-  opacity: 0.6;
-  font-size: 0.9rem;
+.footer-copyright {
+  display: block; 
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
 }
 #contact-btn {
-  margin-left: auto;      /* Pousse le bouton vers la droite */
-  flex-shrink: 0;         /* Empêche le bouton de rétrécir */
+  margin-left: auto;      
+  flex-shrink: 0;         
 }
 .footer-pill {
   height: 36px;              
@@ -1048,7 +1008,6 @@ padding-right: 50px;
     box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
     border-color: #80f3ff;
 }
-
 @keyframes modalPop {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
@@ -1073,13 +1032,9 @@ padding-right: 50px;
     margin: 0 ;
     text-align: center;
   }
- 
-/* Hover card AU-DESSUS de tout */
 .hover-card {
   z-index: 9999;
 }
-
-
 .welcome-content {
   background: linear-gradient(135deg, rgba(11, 42, 46, 0.98), rgba(5, 20, 22, 0.98));
   width: 90%;
@@ -1091,7 +1046,6 @@ padding-right: 50px;
   box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
   animation: modalFadeIn 0.5s ease-out;
 }
-
 .chem-box-welcome {
   width: 60px;
   height: 60px;
@@ -1105,20 +1059,17 @@ padding-right: 50px;
   font-weight: bold;
   background: rgba(0, 255, 140, 0.1);
 }
-
 .welcome-content h2 {
   text-transform: uppercase;
   letter-spacing: 4px;
   margin-bottom: 20px;
   color: #fff;
 }
-
 .welcome-content p {
   line-height: 1.6;
   color: rgba(230, 242, 243, 0.8);
   margin-bottom: 30px;
 }
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1129,13 +1080,12 @@ padding-right: 50px;
     transform: translateY(0);
   }
 }
-/* Flou d'arrière-plan uniquement pour la modal de bienvenue */
 #welcome-modal {
-    display: none; /* Caché par défaut pour éviter le flash */
-    opacity: 0;    /* Invisible pour l'animation */
+    display: none; 
+    opacity: 0;    
     position: fixed;
     inset: 0;
-    z-index: 99999; /* Au-dessus de tout le reste */
+    z-index: 99999; 
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     justify-content: center;
@@ -1145,75 +1095,53 @@ padding-right: 50px;
     opacity: 1;
     visibility: visible;
 }
-/* On centre bien le bouton dans la modal */
 .welcome-content #close-welcome {
     margin: 0 auto;
     min-width: 200px;
 }
-/* Application aux éléments de la modal de bienvenue */
 .welcome-content h2 {
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.2s;
-  opacity: 0; /* Important pour attendre l'animation */
+  opacity: 0; 
 }
-
 .welcome-content p {
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.5s;
   opacity: 0;
 }
-
 .welcome-content .chem-box-welcome {
   animation: fadeInUp 0.8s ease forwards;
-  /* L'élément Al apparaît en premier */
   opacity: 0;
 }
-
 .welcome-content #close-welcome {
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.8s;
   opacity: 0;
 }
-
-/* Effet de pulsation sur le bouton pour inviter à entrer */
 #close-welcome {
   box-shadow: 0 0 10px var(--dynamic-color);
   transition: box-shadow 0.3s ease;
 }
-
 #close-welcome:hover {
   box-shadow: 0 0 25px var(--dynamic-color), inset 0 0 10px white;
 }
-/* -------------------- */
-/* CONTENEUR DE LA FIOLE */
-/* -------------------- */
 .potion-container {
   position: fixed;
   bottom: 30px;
   right: 30px;
   cursor: pointer;
   z-index: 1000;
-
   display: flex;
   justify-content: center;
   align-items: flex-end;
-
   background: none;
   border: none;
   overflow: visible;
-
-  /* Pulse subtil pour donner vie */
   animation: containerFloat 3s infinite ease-in-out;
 }
-
-/* Hover : zoom + rotation */
 .potion-container:hover {
   transform: scale(1.2) rotate(15deg);
 }
-
-/* -------------------- */
-/* LA FIOLE MAGIQUE */
-/* -------------------- */
 .fiole {
   position: relative;
   width: 40px;
@@ -1222,15 +1150,9 @@ padding-right: 50px;
   border: 2px solid #e6f2f3;
   background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
-
-  /* Glow sur la fiole uniquement */
   animation: potionGlow 2s infinite ease-in-out, potionSwing 4s infinite ease-in-out;
   transform-origin: center bottom;
 }
-
-/* -------------------- */
-/* LIQUIDE DYNAMIQUE */
-/* -------------------- */
 .liquide {
   position: absolute;
   bottom: 0;
@@ -1240,32 +1162,24 @@ padding-right: 50px;
   box-shadow: inset 0 0 15px rgba(255,255,255,0.5);
   animation: vagues 2s infinite ease-in-out;
 }
-
-/* -------------------- */
-/* ANIMATIONS */
-/* -------------------- */
 @keyframes containerFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
-
 @keyframes potionGlow {
   0%, 100% { box-shadow: 0 0 10px var(--glow-color); }
   50% { box-shadow: 0 0 25px var(--glow-color); }
 }
-
 @keyframes potionSwing {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(5deg); }
   50% { transform: rotate(-5deg); }
   75% { transform: rotate(3deg); }
 }
-
 @keyframes vagues {
   0%, 100% { clip-path: polygon(0% 15%, 15% 15%, 30% 10%, 45% 15%, 60% 20%, 75% 15%, 90% 10%, 100% 15%, 100% 100%, 0% 100%); }
   50% { clip-path: polygon(0% 10%, 15% 15%, 30% 20%, 45% 15%, 60% 10%, 75% 15%, 90% 20%, 100% 15%, 100% 100%, 0% 100%); }
 }
-/* Animation flash du tableau lors de la sélection */
 @keyframes transmutationFlash {
   0% { filter: brightness(1); }
   25% { filter: brightness(2) saturate(2); box-shadow: 0 0 20px var(--glow-color); }
@@ -1273,24 +1187,21 @@ padding-right: 50px;
   75% { filter: brightness(2) saturate(2); box-shadow: 0 0 20px var(--glow-color); }
   100% { filter: brightness(1); }
 }
-
 .transmuting {
   animation: transmutationFlash 0.3s ease-in-out 3;
 }
-/* Les bulles de la potion */
 .bubble {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
   z-index: 1001;
-  opacity: 0.8; /* Légère transparence pour le côté "bulle" */
-  border: 1px solid rgba(167, 255, 123, 0.3); /* Un petit reflet blanc sur le bord */
+  opacity: 0.8; 
+  border: 1px solid rgba(167, 255, 123, 0.3); 
   animation: bubbleRise 1s ease-out forwards;
   left: 50%;
-  top: 10px; /* Ajuste pour qu'elles sortent du goulot */
+  top: 10px; 
   transform: translateX(-50%);
 }
-
 @keyframes bubbleRise {
   0% {
     transform: translateY(0) scale(0.5);
@@ -1302,12 +1213,9 @@ padding-right: 50px;
     scale: 1.2;
   }
 }
-
-/* On modifie un peu la fiole pour qu'elle ait l'air plus "active" au clic */
 .potion-active {
   animation: shake 0.2s infinite;
 }
-
 @keyframes shake {
   0% { transform: rotate(0deg); }
   25% { transform: rotate(5deg); }
@@ -1328,8 +1236,6 @@ padding-right: 50px;
   border-radius: 3px 3px 0 0;
 }
 @media (hover: hover) and (pointer: fine) {
-
-  /* FILTER / BUTTONS */
   .pill-button,
   .filter-wrapper {
     text-shadow: 0 0 8px var(--dynamic-color);
@@ -1337,7 +1243,6 @@ padding-right: 50px;
       inset 0 0 10px rgba(0, 0, 0, 0.5),
       0 0 10px rgba(0, 212, 255, 0.2);
   }
-
   .pill-button:hover,
   .filter-wrapper:hover {
     background-color: var(--dynamic-color);
@@ -1345,27 +1250,22 @@ padding-right: 50px;
     box-shadow: 0 0 25px var(--dynamic-color);
     text-shadow: none;
   }
-
-  /* CELLS */
   .cell:hover {
     transform: scale(1.15);
     z-index: 1000;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
-
   .cell:hover::after {
     transform: scale(1.1);
     box-shadow: 0 0 5px currentColor;
   }
 }
 @media (hover: none) and (pointer: coarse) {
-
   .cell:hover {
     transform: none;
     z-index: 1;
     box-shadow: none;
   }
-
   .rating-item:hover,
   .potion-container:hover {
     transform: none;
@@ -1373,33 +1273,25 @@ padding-right: 50px;
   }
 }
 @media (max-width: 768px) {
-
-  /* HEADER */
   .header-title {
     padding: 15px;
     text-align: center;
   }
-
   .header-title h1 {
     font-size: 1.6rem;
     line-height: 1.4;
   }
-
   .mobile-break {
     display: block;
     margin-top: 10px;
   }
-
   .chem-box {
     display: inline-flex;
     vertical-align: middle;
   }
-
-  /* PAGE STRUCTURE */
   .page-content {
     padding: 10px;
   }
-
   .main-header {
     display: flex;
     flex-direction: column;
@@ -1407,8 +1299,6 @@ padding-right: 50px;
     gap: 15px;
     margin-bottom: 20px;
   }
-
-  /* FILTER / BUTTONS */
   .header-actions {
     width: 100%;
     display: flex;
@@ -1417,7 +1307,6 @@ padding-right: 50px;
     gap: 12px;
     padding: 0 15px;
   }
-
   .pill-button,
   .filter-wrapper {
     width: 100%;
@@ -1427,13 +1316,10 @@ padding-right: 50px;
     border-radius: 25px;
     flex: none;
   }
-
-  /* TABLE */
   .table-scroll-area {
     overflow-x: auto;
     padding: 10px 0;
   }
-
   .table {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1442,7 +1328,6 @@ padding-right: 50px;
     width: 100%;
     padding: 5px;
   }
-
   .cell {
     width: 100%;
     height: 100%;
@@ -1451,11 +1336,9 @@ padding-right: 50px;
     border-radius: 4px;
     transform: none;
   }
-
   .code {
     font-size: 1.4rem;
   }
-
   .title {
     font-size: 0.55rem;
     line-height: 1.1;
@@ -1465,12 +1348,9 @@ padding-right: 50px;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
-  /* MODALS */
   .modal {
     align-items: flex-end;
   }
-
   .modal-content {
     width: 100%;
     height: 92vh;
@@ -1478,100 +1358,94 @@ padding-right: 50px;
     padding: 20px;
     overflow-y: auto;
   }
-
   .modal-body {
     flex-direction: column;
   }
-
   #modal-image {
     width: 100%;
     height: auto;
   }
-
   #modal-img-main {
-    max-width: 180px;
+    width: 100%;
+    max-width: 220px; 
+    height: 340px;    
+    margin: 0 auto 15px auto;
+  }
+    .footer-copy {
+    display: none;
+  }
+  .btn-buy-now {
+  background: rgba(255, 121, 37, 0.802) !important;
+  border-color: #ff7c1f !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 119, 22, 0.511);
+  font-weight: 800;
+  font-size: 0.9rem;          
+  padding: 8px 12px;          
+  border-radius: 10px;        
+  text-transform: uppercase;  
+  transition: all 0.3s ease;  
+}
   }
   .contact-modal {
-    position: fixed;       /* reste fixé à l’écran */
-    bottom: 20px;          /* distance depuis le bas */
-    left: 15px;            /* distance depuis la gauche */
-    right: auto;           /* annule le centrage horizontal */
-    width: 90%;            /* largeur adaptée */
-    max-width: 350px;      /* optionnel, pour mobile */
+    position: fixed;       
+    bottom: 20px;          
+    left: 15px;            
+    right: auto;           
+    width: 90%;            
+    max-width: 350px;      
     padding: 20px;
-    border-radius: 15px;   /* arrondi plus petit pour mobile */
+    border-radius: 15px;   
     box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    text-align: left;      /* texte aligné à gauche */
+    text-align: left;      
     transform: translateX(-50%);
-    max-height: 80vh;   /* empêche de dépasser l'écran */
-    overflow-y: auto;   /* scroll si besoin */
+    max-height: 80vh;   
+    overflow-y: auto;   
     animation: slideUp 0.4s ease-out forwards
   }
    @keyframes slideUp {
     from { opacity: 0; transform: translateY(100%); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .btn-buy-now {
-    background: rgba(255, 121, 37, 0.802) !important; /* Orange transparent */
-    border-color: #ff7c1f !important;             /* Orange vif */
-    color: #ffffff !important;                    /* Texte orange */
-    box-shadow: 0 0 15px rgba(255, 119, 22, 0.511); /* Glow orange */
-    font-weight: 800;                             /* Un peu plus gras pour la lisibilité */
-  }
-}
-
   .contact-modal h2 {
     font-size: 1.2rem;
   }
-
   .contact-form input,
   .contact-form textarea {
     font-size: 0.85rem;
     padding: 10px;
   }
-  
-  
-  /* FOOTER */
-  .footer-copy {
-    display: none;
-  }
-
   .main-footer {
-    flex-direction: row;        /* Alignement horizontal */
-    justify-content: flex-start; /* Tout à gauche */
+    flex-direction: row;        
+    justify-content: flex-start; 
     padding: 15px 20px;
   }
-  #contact-btn {
-    margin-left: 0;             /* Annule le margin-left:auto */
-    margin-right: 10px;         /* Petit espace entre contact et copyright */
+ #contact-btn {
+    margin-left: auto; 
+    flex-shrink: 0;
   }
    .copyright {
-    flex: 1;                    /* Prend le reste de la ligne */
+    flex: 1;                    
     text-align: left;
   }
   .footer-pill {
     max-width: 120px;
-    flex: 0 0 auto;             /* Pas d’étirement sur mobile */
+    flex: 0 0 auto;             
   }
   .key-modal-content {
     position: relative;
-    padding-top: 70px; /* 🔥 espace réservé pour le X */
+    padding-top: 70px; 
   }
-
-  /* Bouton fermer */
   #close-key {
     position: absolute;
     top: 18px;
     left: 18px;
     z-index: 20;
-
     width: 38px;
     height: 38px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: rgba(0, 0, 0, 0.45);
     border-radius: 10px;
     backdrop-filter: blur(6px);
@@ -1579,26 +1453,22 @@ padding-right: 50px;
   .key-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px; /* 🔥 respiration */
+    gap: 14px; 
     margin-top: 20px;
   }
-
   .key-item {
     min-height: 78px;
     padding: 10px 8px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
-
   .key-number {
     font-size: 1.1rem;
     margin-bottom: 4px;
   }
-
   .key-label {
     font-size: 0.75rem;
     line-height: 1.1;
@@ -1606,7 +1476,6 @@ padding-right: 50px;
 .potion-container {
     animation: containerFloat 3s infinite ease-in-out, potionBounce 1s ease-out;
   }
-
   @keyframes potionBounce {
     0% { transform: translateY(50px); opacity: 0; }
     60% { transform: translateY(-10px); opacity: 1; }
@@ -1615,22 +1484,19 @@ padding-right: 50px;
 .modal-reviews {
   margin-top: 40px;
   padding-top: 20px;
-  min-height: 300px; /* Évite les sauts de page au chargement */
+  min-height: 300px; 
 }
-
 .review-divider {
   display: flex;
   align-items: center;
   text-align: center;
   margin-bottom: 25px;
 }
-
 .review-divider::before, .review-divider::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .review-divider span {
   padding: 0 15px;
   font-family: 'Cinzel', serif;
@@ -1638,95 +1504,79 @@ padding-right: 50px;
   color: var(--gold, #ffcc00);
   letter-spacing: 2px;
 }
-
-/* On s'assure que Disqus ne dépasse pas sur mobile */
 #disqus_thread {
   width: 100%;
-  color-scheme: dark; /* Force Disqus en mode sombre si possible */
+  color-scheme: dark; 
 }
 .reaction-section {
+  background: rgba(0, 0, 0, 0.2); 
+  border-radius: 12px;
+  padding: 10px 15px;      
+  margin: 0;               
   text-align: center;
-  margin-top: 25px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 .reaction-title {
-  font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 15px;
+  font-size: 0.7rem;       
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;      
+  opacity: 0.6;
 }
-
 .reaction-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-
 .react-btn {
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 10px 20px;
   border-radius: 30px;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
+  padding: 5px 12px;       
+  font-size: 0.8rem;
+  gap: 8px;
 }
-
 .react-btn:hover { transform: translateY(-3px); }
-
 .react-btn.like:hover { 
   border-color: #00ff8c; 
   box-shadow: 0 0 15px rgba(0, 255, 140, 0.3);
 }
-
 .react-btn.dislike:hover { 
   border-color: #ff4b2b; 
   box-shadow: 0 0 15px rgba(255, 75, 43, 0.3);
 }
-
 .count { font-family: 'Space Mono', monospace; font-weight: bold; }
 .react-btn:disabled, .react-btn[style*="pointer-events: none"] {
     cursor: not-allowed;
     filter: grayscale(0.8);
 }
-
 .voted-success {
     animation: pulse-gold 0.5s ease-in-out;
 }
-
 @keyframes pulse-gold {
     0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
     100% { box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
 }
 .icon-svg {
-  width: 20px;
-  height: 20px;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: all 0.3s ease;
+  width: 18px;             
+  height: 18px;
+  transition: transform 0.2s ease, stroke 0.3s ease;
 }
-
-/* Couleur Or pour le Like au survol */
 .react-btn.like:hover .icon-svg {
-  stroke: #ffcc00;
-  filter: drop-shadow(0 0 5px #ffcc00);
+  stroke: #00ff8c; 
+  transform: translateY(-3px) rotate(-10deg);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 140, 0.4));
 }
-
-/* Couleur Sombre/Bleutée pour le Dislike au survol */
 .react-btn.dislike:hover .icon-svg {
-  stroke: #556677;
-  filter: drop-shadow(0 0 5px #556677);
+  stroke: #ff4b2b; 
+  transform: translateY(3px) rotate(10deg);
+  filter: drop-shadow(0 0 8px rgba(255, 75, 43, 0.4));
 }
-
-.react-btn .count {
-  font-size: 1.1rem;
-  margin-left: 8px;
+.react-btn[style*="pointer-events: none"] .icon-svg {
+  stroke: #555; 
 }
